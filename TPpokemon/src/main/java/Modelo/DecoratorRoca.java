@@ -53,5 +53,25 @@ public class DecoratorRoca extends DecoratorPokemon
 			this.vitalidad = 0;
 		}
 	}
+	
+	public void hechizoNiebla()
+	{
+		this.encapsulado.hechizoNiebla();
+		if(this.auraDeRoca)
+			this.auraDeRoca = false;
+	}
+
+	public void hechizoViento()
+	{
+		this.encapsulado.hechizoViento();
+		this.vitalidad *= 0.9;
+		this.escudo *= 0.9;
+	}
+
+	public void hechizoTormenta()
+	{
+		this.encapsulado.hechizoTormenta();
+		this.vitalidad *= 0.8;
+	}
 
 }

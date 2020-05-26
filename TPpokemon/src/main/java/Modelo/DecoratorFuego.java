@@ -66,4 +66,24 @@ public class DecoratorFuego extends DecoratorPokemon
 			encapsulado.recarga();
 	}
 
+	public void hechizoNiebla()
+	{
+		this.encapsulado.hechizoNiebla();
+		if(this.auraDeFuego)
+			this.auraDeFuego = false;
+	}
+
+	public void hechizoViento()
+	{
+		this.encapsulado.hechizoViento();
+		if(this.recargaFuego)
+			this.recargaFuego = false;
+	}
+
+	public void hechizoTormenta()
+	{
+		this.encapsulado.hechizoTormenta();
+		this.escudo *= 0.8;
+	}
+
 }

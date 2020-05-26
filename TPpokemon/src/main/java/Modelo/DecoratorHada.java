@@ -36,5 +36,24 @@ public class DecoratorHada extends DecoratorPokemon
 				this.vitalidad = 0;					//Ver que pasa cuando muere
 			this.escudo = 0;
 		}
-	}	
+	}
+
+	public void hechizoNiebla()
+	{
+		this.encapsulado.hechizoNiebla();
+		if(this.auraDeHada)
+			this.auraDeHada = false;
+	}
+
+	public void hechizoViento()
+	{
+		this.encapsulado.hechizoViento();
+		this.vitalidad *= 0.85;
+	}
+
+	public void hechizoTormenta()
+	{
+		this.encapsulado.hechizoTormenta();
+		this.fuerza *= 0.8;
+	}
 }

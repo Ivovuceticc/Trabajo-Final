@@ -1,6 +1,6 @@
 package Modelo;
 
-public abstract class Pokemon
+public abstract class Pokemon implements Hechizable
 {
 	protected String nombre;
 	protected double escudo, vitalidad, fuerza;

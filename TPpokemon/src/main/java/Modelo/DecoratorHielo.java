@@ -63,4 +63,24 @@ public class DecoratorHielo extends DecoratorPokemon
 		else
 			encapsulado.recarga();
 	}
+	
+	public void hechizoNiebla()
+	{
+		this.encapsulado.hechizoNiebla();
+		if(this.auraDeHielo)
+			this.auraDeHielo = false;
+	}
+
+	public void hechizoViento()
+	{
+		this.encapsulado.hechizoViento();
+		if(this.granRecarga)
+			this.granRecarga = false;
+	}
+
+	public void hechizoTormenta()
+	{
+		this.encapsulado.hechizoTormenta();
+		this.vitalidad *= 0.8;
+	}
 }

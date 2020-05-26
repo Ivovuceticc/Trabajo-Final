@@ -30,5 +30,23 @@ public class PokemonLegendario extends Pokemon
 		}
 		this.fuerza *= 1.05;
 	}
+
+	public void hechizoNiebla()
+	{
+		this.vitalidad *= 0.8;
+		this.fuerza *= 0.8;
+	}
+
+	public void hechizoViento()
+	{
+		this.vitalidad *= 0.75;
+		this.escudo *= 0.8; 
+		
+	}
+
+	public void hechizoTormenta()
+	{
+		this.fuerza *= 0.4;
+	}
 	
 }

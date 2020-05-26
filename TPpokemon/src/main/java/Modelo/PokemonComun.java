@@ -28,5 +28,22 @@ public class PokemonComun extends Pokemon
 			this.escudo = 0;
 		}
 	}
+
+	public void hechizoNiebla()
+	{
+		this.vitalidad *= 0.9;
+		this.fuerza *= 0.9;
+	}
+
+	public void hechizoViento()
+	{
+		this.vitalidad *= 0.8;
+		this.escudo *= 0.9; 
+	}
+
+	public void hechizoTormenta()
+	{
+		this.fuerza *= 0.8;
+	}
 	
 }

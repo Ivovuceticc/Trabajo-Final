@@ -53,4 +53,24 @@ public class DecoratorAgua extends DecoratorPokemon
 			encapsulado.recarga();
 	}
 
+	public void hechizoNiebla()
+	{
+		this.encapsulado.hechizoNiebla();
+		if(this.auraDeAgua)
+			this.auraDeAgua = false;
+	}
+
+	public void hechizoViento()
+	{
+		this.encapsulado.hechizoViento();
+		if(this.recargaAgua)
+			this.recargaAgua = false;
+	}
+
+	public void hechizoTormenta()
+	{
+		this.encapsulado.hechizoTormenta();
+		this.vitalidad *= 0.8;
+	}
+
 }
