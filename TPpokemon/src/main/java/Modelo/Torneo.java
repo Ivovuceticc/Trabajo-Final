@@ -1,7 +1,6 @@
 package Modelo;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * @author Ivo Vucetic<br>
@@ -17,7 +16,7 @@ public class Torneo
 	private String nombre;
 	private ArrayList<Entrenador> listaEntrenadores;
 	private static Torneo instanceTorneo = null;
-	private ArrayList<Ronda> listaRondas;
+	private Ronda ronda;
 
 	/**
 	 * Constructor para iniciar la lista que contendra a los entrenadores y las
@@ -25,8 +24,8 @@ public class Torneo
 	 */
 	private Torneo()
 	{
-		this.listaEntrenadores = new ArrayList<Entrenador>();
-		this.listaRondas = new ArrayList<Ronda>();
+		this.listaEntrenadores = new ArrayList<Entrenador>(8);
+		this.ronda = new Ronda();
 	}
 
 	/**
@@ -46,11 +45,6 @@ public class Torneo
 		return nombre;
 	}
 
-	public void setNombre(String nombre)
-	{
-		this.nombre = nombre;
-	}
-
 	/**
 	 * Estem método se encarga de agregar un entrenador a la lista de los mismos.
 	 * <br>
@@ -67,14 +61,12 @@ public class Torneo
 	 * 
 	 * @param numero: Representa la actual.
 	 */
-	public void creaRonda(int numero)
+	public void iniciaTorneo()
 	{
-		Ronda nuevaRonda = new Ronda(numero);
-		if (numero == 1)
-			nuevaRonda.Inicia(listaEntrenadores);
-		else
-			nuevaRonda.Inicia(listaRondas.get(numero - 2).getListaGanadores());
-		listaRondas.add(nuevaRonda);
+		while (listaEntrenadores.size() > 1)
+		{	
+			listaEntrenadores = ronda.inicia(listaEntrenadores);
+		}
 	}
 
 }
