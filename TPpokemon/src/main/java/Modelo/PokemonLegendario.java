@@ -5,7 +5,7 @@ public class PokemonLegendario extends Pokemon
 	
 	public PokemonLegendario(String nombre)
 	{
-		super(nombre, 200, 40, 50, 0); // Inicializo cualquier pokemon que sea de tipo comun
+		super(nombre, 200, 40, 50, 0); // Inicializo cualquier pokemon que sea de tipo legendario
 	}
 
 	@Override

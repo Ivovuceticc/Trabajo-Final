@@ -11,7 +11,7 @@ public class Batalla
 
 	protected Entrenador inicia(Entrenador entrenadorA, Entrenador entrenadorB)
 	{
-		Pokemon pokemonA, pokemonB;Random generador = new Random();
+		Pokemon pokemonA = null, pokemonB = null;Random generador = new Random();
 		ICarta cartaHechizo;
 
 		System.out.println("------ELECCION DE POKEMONES------");
@@ -29,7 +29,7 @@ public class Batalla
 		try
 		{
 			cartaHechizo = entrenadorA.eligeCarta();
-			System.out.println(entrenadorA.getNombre() +"realiza un hechizo de "+ cartaHechizo.getString() " al pokemon de" + entrenadorB.getNombre());
+			System.out.println(entrenadorA.getNombre() +"realiza un hechizo de "+ cartaHechizo.toString() +" al pokemon de" + entrenadorB.getNombre());
 			cartaHechizo.hechizar(pokemonB);
 		}
 		catch(ExcedeCantidadHechizosException e)
@@ -41,7 +41,7 @@ public class Batalla
 			e.getMessage();
 		}
 		
-		System.out.println("-----Entrenador: "+ entrenadorB.getNombre() +""-----");
+		System.out.println("-----Entrenador: "+ entrenadorB.getNombre() +"-----");
 		try
 		{
 			pokemonB = entrenadorB.eligePokemon();
@@ -53,8 +53,8 @@ public class Batalla
 		try
 		{
 			cartaHechizo = entrenadorB.eligeCarta();
-			System.out.println(entrenadorB.getNombre() +"realiza un hechizo de "+ cartaHechizo.getString()+" al pokemon de" + entrenadorB.getNombre());
-			cartaHechizo.hechizar(PokemonA);
+			System.out.println(entrenadorB.getNombre() +"realiza un hechizo de "+ cartaHechizo.toString()+" al pokemon de" + entrenadorB.getNombre());
+			cartaHechizo.hechizar(pokemonA);
 		}
 		catch(ExcedeCantidadHechizosException e)
 		{
@@ -80,24 +80,34 @@ public class Batalla
 			pokemonB.atacar(pokemonB);
 		}		
 		
-		return batalla.defineGanador(pokemonA, pokemonB, entrenadorA, entrenadorB);
+		return this.defineGanador(entrenadorA, entrenadorB, pokemonA, pokemonB);
 	}
 
 	private Entrenador defineGanador(Entrenador entrenadorA, Entrenador entrenadorB, Pokemon pokemonA, Pokemon pokemonB)
 	{
 		Entrenador ganador;
-		int puntajeA, puntajeB;
+		double puntajeA, puntajeB;
 		
-		puntajeA = pokemonA.getVitalidad() + pokemonA.getEscudo() + pokemonA.getFuerza();
-		puntajeB = pokemonB.getVitalidad() + pokemonB.getEscudo() + pokemonB.getFuerza();
+		puntajeA = pokemonA.vitalidad + pokemonA.escudo + pokemonA.fuerza;
+		puntajeB = pokemonB.vitalidad + pokemonB.escudo + pokemonB.fuerza;
 		
-		if(pokemonA.getVitalidad() == 0 || puntajeB > puntajeA) 
+		if(pokemonA.vitalidad == 0 || puntajeB > puntajeA) 
 		{	
-			pokemonA.setExperiencia()
+			pokemonB.experiencia += 3;
+			pokemonA.experiencia += 1;
 			ganador = entrenadorB;
+			if(pokemonA.vitalidad == 0)
+				entrenadorA.getListaPokemonesDerrotados().add(pokemonA);
+			else
+				entrenadorA.agregaPokemon(pokemonA);
 		}	
-		else
+		else 
+		{
 			ganador = entrenadorA;
+			
+			
+		}
+		return ganador;
 	}
 
 }

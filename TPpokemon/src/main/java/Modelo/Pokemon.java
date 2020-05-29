@@ -38,6 +38,12 @@ public abstract class Pokemon implements Hechizable
 	{
 		System.out.println("No es posible recargarse");
 	}
+	
+	
+	protected String getNombre()
+	{
+		return nombre;
+	}
 
 	protected abstract void golpeFinal(Pokemon adversario);
 

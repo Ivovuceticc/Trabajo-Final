@@ -27,14 +27,14 @@ public class Entrenador implements Cloneable
 		this.listaPokemones.add(pokemon);
 	}
 
-	public void agregaPokemonDerrotados(Pokemon pokemon)
-	{
-		this.listaPokemonesDerrotados.add(pokemon);
-	}
-
 	public void agregaCarta(ICarta carta)
 	{
 		this.listaCartas.add(carta);
+	}
+
+	public ArrayList<Pokemon> getListaPokemonesDerrotados()
+	{
+		return listaPokemonesDerrotados;
 	}
 
 	public ArrayList<Pokemon> getListaPokemones()
@@ -52,8 +52,11 @@ public class Entrenador implements Cloneable
 		for (i = 1; i <= this.listaPokemones.size(); i++)
 			System.out.println(i + "-" + this.listaPokemones.get(i - 1).toString());
 		i = sc.nextInt();
-		if (i > 0 && i <= this.listaPokemones.size())
+		if (i > 0 && i <= this.listaPokemones.size()) 
+		{
 			pokemon = this.listaPokemones.get(i - 1);
+			this.listaPokemones.remove(i-1);
+		}
 		else
 			throw new NumeroNoValidoException("El numero no es valido, debe ser alguno de la lista mostrada", i);
 
