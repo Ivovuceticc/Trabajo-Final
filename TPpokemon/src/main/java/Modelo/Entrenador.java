@@ -11,14 +11,14 @@ public class Entrenador implements Cloneable
 	private static final int cantidadPokemones = 4;
 	private static final int cantidadTipoCartas = 3;
 	private static final int numeroCartasParaUso = 4;
-	private ArrayList<Icarta> listaCartas;
+	private ArrayList<ICarta> listaCartas;
 	private int numeroCartasUsadas = 0;
 
 	public Entrenador(String nombre)
 	{
 		this.nombre = nombre;
 		this.listaPokemones = new ArrayList<Pokemon>(Entrenador.cantidadPokemones);
-		this.listaCartas = new ArrayList<Icarta>(Entrenador.cantidadTipoCartas);
+		this.listaCartas = new ArrayList<ICarta>(Entrenador.cantidadTipoCartas);
 		this.listaPokemonesDerrotados = new ArrayList<Pokemon>();
 	}
 
@@ -60,9 +60,9 @@ public class Entrenador implements Cloneable
 		return pokemon;
 	}
 
-	public Icarta eligeCarta() throws ExcedeCantidadHechizosException,NumeroNoValidoException 
+	public ICarta eligeCarta() throws ExcedeCantidadHechizosException,NumeroNoValidoException 
 	{
-		Icarta carta = null;
+		ICarta carta = null;
 		Scanner sc = new Scanner(System.in);
 		int i;
 		
@@ -73,7 +73,7 @@ public class Entrenador implements Cloneable
 			System.out.println(i + "-" + this.listaCartas.get(i-1).toString());
 			i = sc.nextInt(); 
 			if( i > 0 && i <= Entrenador.cantidadTipoCartas)
-				if(this.listaCartas.get(i-1).getCantidad >0) 
+				if(this.listaCartas.get(i-1).getCantidad()>0) 
 				{
 					carta = this.listaCartas.get(i-1);	
 				}
