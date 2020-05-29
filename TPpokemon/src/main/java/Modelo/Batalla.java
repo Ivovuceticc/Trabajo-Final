@@ -9,14 +9,14 @@ public class Batalla
 	{
 	}
 
-	public Entrenador inicia(Entrenador entrenadorA, Entrenador entrenadorB)
+	protected Entrenador inicia(Entrenador entrenadorA, Entrenador entrenadorB)
 	{
-		Entrenador ganador = null;Pokemon pokemonA, pokemonB;Random generador = new Random();
+		Pokemon pokemonA, pokemonB;Random generador = new Random();
 		ICarta cartaHechizo;
 
 		System.out.println("------ELECCION DE POKEMONES------");
 		
-		System.out.println("-----Entrenador: "+ entrenadorA.getNombre() +""-----");
+		System.out.println("-----Entrenador: "+ entrenadorA.getNombre() +"-----");
 		try
 		{
 			pokemonA = entrenadorA.eligePokemon();
@@ -30,7 +30,7 @@ public class Batalla
 		{
 			cartaHechizo = entrenadorA.eligeCarta();
 			System.out.println(entrenadorA.getNombre() +"realiza un hechizo de "+ cartaHechizo.getString() " al pokemon de" + entrenadorB.getNombre());
-			cartaHechizo.hechizar(PokemonB);
+			cartaHechizo.hechizar(pokemonB);
 		}
 		catch(ExcedeCantidadHechizosException e)
 		{
@@ -53,7 +53,7 @@ public class Batalla
 		try
 		{
 			cartaHechizo = entrenadorB.eligeCarta();
-			System.out.println(entrenadorB.getNombre() +"realiza un hechizo de "+ cartaHechizo.getString() " al pokemon de" + entrenadorB.getNombre());
+			System.out.println(entrenadorB.getNombre() +"realiza un hechizo de "+ cartaHechizo.getString()+" al pokemon de" + entrenadorB.getNombre());
 			cartaHechizo.hechizar(PokemonA);
 		}
 		catch(ExcedeCantidadHechizosException e)
@@ -80,7 +80,24 @@ public class Batalla
 			pokemonB.atacar(pokemonB);
 		}		
 		
-		ganador = 
-		return ganador;
+		return batalla.defineGanador(pokemonA, pokemonB, entrenadorA, entrenadorB);
 	}
+
+	private Entrenador defineGanador(Entrenador entrenadorA, Entrenador entrenadorB, Pokemon pokemonA, Pokemon pokemonB)
+	{
+		Entrenador ganador;
+		int puntajeA, puntajeB;
+		
+		puntajeA = pokemonA.getVitalidad() + pokemonA.getEscudo() + pokemonA.getFuerza();
+		puntajeB = pokemonB.getVitalidad() + pokemonB.getEscudo() + pokemonB.getFuerza();
+		
+		if(pokemonA.getVitalidad() == 0 || puntajeB > puntajeA) 
+		{	
+			pokemonA.setExperiencia()
+			ganador = entrenadorB;
+		}	
+		else
+			ganador = entrenadorA;
+	}
+
 }
