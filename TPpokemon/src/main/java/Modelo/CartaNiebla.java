@@ -2,7 +2,14 @@ package Modelo;
 
 public class CartaNiebla implements ICarta
 {
-	public final int cantidad = 2;	
+	private int cantidad;
+	private String Nombre;
+
+	public CartaNiebla()
+	{
+		this.cantidad = 2;
+		this.Nombre = "Carta Niebla";
+	}
 
 	public void hechizar(Hechizable hechizable)
 	{
@@ -14,4 +21,22 @@ public class CartaNiebla implements ICarta
 		return cantidad;
 	}
 	
+	@Override
+	public void setCantidad(int cantidad)
+	{
+		this.cantidad = cantidad;
+	}
+
+	@Override
+	public String getNombre()
+	{
+		return this.Nombre;
+	}
+
+	@Override
+	public String toString()
+	{
+		return "CartaNiebla [cantidad=" + cantidad + ", Nombre=" + Nombre + "]";
+	}
+
 }

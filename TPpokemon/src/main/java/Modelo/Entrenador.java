@@ -78,7 +78,8 @@ public class Entrenador implements Cloneable
 			if( i > 0 && i <= Entrenador.cantidadTipoCartas)
 				if(this.listaCartas.get(i-1).getCantidad()>0) 
 				{
-					carta = this.listaCartas.get(i-1);	
+					carta = this.listaCartas.get(i-1);
+					carta.setCantidad(carta.getCantidad() -1);
 				}
 				else throw new NumeroNoValidoException("Se agoto la cantidad de veces que se podia usar la carta", i);
 			else

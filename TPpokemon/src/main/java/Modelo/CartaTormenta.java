@@ -2,17 +2,41 @@ package Modelo;
 
 public class CartaTormenta implements ICarta
 {
-	public final int cantidad = 2;
-	
+	protected int cantidad;
+	public String Nombre;
+
+	public CartaTormenta()
+	{
+		this.cantidad = 2;
+		this.Nombre = "Carta Tormenta";
+	}
+
 	public void hechizar(Hechizable hechizable)
 	{
-		hechizable.hechizoTormenta();
+		hechizable.hechizoTormenta();	
 	}
 
 	public int getCantidad()
 	{
 		return cantidad;
 	}
+	
+	@Override
+	public void setCantidad(int cantidad)
+	{
+		this.cantidad = cantidad;
+	}
 
+	@Override
+	public String getNombre()
+	{
+		return this.Nombre;
+	}
+
+	@Override
+	public String toString()
+	{
+		return "CartaTormenta [cantidad=" + cantidad + ", Nombre=" + Nombre + "]";
+	}
 		
 }

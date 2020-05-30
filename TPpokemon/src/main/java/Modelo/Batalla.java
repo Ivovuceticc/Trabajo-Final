@@ -29,7 +29,7 @@ public class Batalla
 		try
 		{
 			cartaHechizo = entrenadorA.eligeCarta();
-			System.out.println(entrenadorA.getNombre() +"realiza un hechizo de "+ cartaHechizo.toString() +" al pokemon de" + entrenadorB.getNombre());
+			System.out.println(entrenadorA.getNombre() +"realiza un hechizo de "+ cartaHechizo.getNombre() +" al pokemon de" + entrenadorB.getNombre());
 			cartaHechizo.hechizar(pokemonB);
 		}
 		catch(ExcedeCantidadHechizosException e)
@@ -53,7 +53,7 @@ public class Batalla
 		try
 		{
 			cartaHechizo = entrenadorB.eligeCarta();
-			System.out.println(entrenadorB.getNombre() +"realiza un hechizo de "+ cartaHechizo.toString()+" al pokemon de" + entrenadorB.getNombre());
+			System.out.println(entrenadorB.getNombre() +"realiza un hechizo de "+ cartaHechizo.getNombre()+" al pokemon de" + entrenadorB.getNombre());
 			cartaHechizo.hechizar(pokemonA);
 		}
 		catch(ExcedeCantidadHechizosException e)

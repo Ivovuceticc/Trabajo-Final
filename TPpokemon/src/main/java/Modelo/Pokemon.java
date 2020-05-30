@@ -48,4 +48,12 @@ public abstract class Pokemon implements Hechizable
 	protected abstract void golpeFinal(Pokemon adversario);
 
 	protected abstract void recibeDano(double dano);
+
+	@Override
+	public String toString()
+	{
+		return "Pokemon [nombre=" + nombre + ", escudo=" + escudo + ", vitalidad=" + vitalidad + ", fuerza=" + fuerza
+				+ ", experiencia=" + experiencia + "]";
+	}
+	
 }
