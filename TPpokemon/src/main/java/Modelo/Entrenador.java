@@ -8,7 +8,7 @@ public class Entrenador implements Cloneable
 	private String nombre;
 	private ArrayList<Pokemon> listaPokemones;
 	private ArrayList<Pokemon> listaPokemonesDerrotados;
-	private static final int cantidadPokemones = 4;
+	private static final int cantidadPokemones = 3;
 	private static final int cantidadTipoCartas = 3;
 	private static final int numeroCartasParaUso = 4;
 	private ArrayList<ICarta> listaCartas;

@@ -56,11 +56,18 @@ public class DecoratorHada extends DecoratorPokemon
 		this.encapsulado.hechizoTormenta();
 		this.fuerza *= 0.8;
 	}
-
+	
+	@Override
+	protected String getTipo()
+	{
+		return encapsulado.getTipo() + " De Hada";
+	}
+	
 	@Override
 	public String toString()
 	{
-		return encapsulado.toString() +" ,Elemento:Hada";
+		return  "Pokemon nombre=" + nombre + ", escudo=" + escudo + ", vitalidad=" + vitalidad + ", fuerza=" + fuerza
+				+ ", experiencia=" + experiencia + this.getTipo();
 	}
 	
 }

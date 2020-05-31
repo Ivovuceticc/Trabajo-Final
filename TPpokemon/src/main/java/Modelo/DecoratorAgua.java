@@ -72,10 +72,17 @@ public class DecoratorAgua extends DecoratorPokemon
 		this.encapsulado.hechizoTormenta();
 		this.vitalidad *= 0.8;
 	}
-	
+	@Override
+	protected String getTipo()
+	{
+		return encapsulado.getTipo() + " De Agua";
+	}
+
 	@Override
 	public String toString()
 	{
-		return encapsulado.toString() +" ,Agua:Hada";
+		return  "Pokemon nombre=" + nombre + ", escudo=" + escudo + ", vitalidad=" + vitalidad + ", fuerza=" + fuerza
+				+ ", experiencia=" + experiencia + this.getTipo();
 	}
+	
 }

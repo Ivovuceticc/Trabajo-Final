@@ -15,6 +15,7 @@ public class Torneo
 {
 	private String nombre;
 	private ArrayList<Entrenador> listaEntrenadores;
+	private final int cantidadEntrenadores;
 	private static Torneo instanceTorneo = null;
 	private Ronda ronda;
 
@@ -23,8 +24,9 @@ public class Torneo
 	 * rondas. <br>
 	 */
 	private Torneo()
-	{
-		this.listaEntrenadores = new ArrayList<Entrenador>(8);
+	{	
+		this.cantidadEntrenadores = 8;
+		this.listaEntrenadores = new ArrayList<Entrenador>(cantidadEntrenadores);
 		this.ronda = new Ronda();
 	}
 

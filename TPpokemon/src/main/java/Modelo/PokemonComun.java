@@ -47,10 +47,14 @@ public class PokemonComun extends Pokemon
 	}
 	
 	@Override
-	public String toString()
+	protected String getTipo()
 	{
-		return super.toString()+ " ,Tipo: PokemonComun";
+		return " PokemonComun";
 	}
 	
-	
+	@Override
+	public String toString()
+	{
+		return super.toString()+ this.getTipo();
+	}
 }

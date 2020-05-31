@@ -73,10 +73,16 @@ public class DecoratorRoca extends DecoratorPokemon
 		this.encapsulado.hechizoTormenta();
 		this.vitalidad *= 0.8;
 	}
+	@Override
+	protected String getTipo()
+	{
+		return encapsulado.getTipo() + " De Roca";
+	}
 	
 	@Override
 	public String toString()
 	{
-		return encapsulado.toString() +" ,Elemento:Roca";
+		return  "Pokemon nombre=" + nombre + ", escudo=" + escudo + ", vitalidad=" + vitalidad + ", fuerza=" + fuerza
+				+ ", experiencia=" + experiencia + this.getTipo();
 	}
 }

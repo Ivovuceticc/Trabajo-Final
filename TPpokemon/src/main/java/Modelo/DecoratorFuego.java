@@ -85,11 +85,16 @@ public class DecoratorFuego extends DecoratorPokemon
 		this.encapsulado.hechizoTormenta();
 		this.escudo *= 0.8;
 	}
+	@Override
+	protected String getTipo()
+	{
+		return encapsulado.getTipo() + " De Fuego";
+	}
 	
 	@Override
 	public String toString()
 	{
-		return encapsulado.toString() +" ,Elemento:Fuego";
+		return  "Pokemon nombre=" + nombre + ", escudo=" + escudo + ", vitalidad=" + vitalidad + ", fuerza=" + fuerza
+				+ ", experiencia=" + experiencia + this.getTipo();
 	}
-
 }

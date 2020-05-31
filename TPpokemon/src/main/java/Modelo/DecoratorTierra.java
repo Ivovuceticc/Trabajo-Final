@@ -44,4 +44,16 @@ public class DecoratorTierra extends DecoratorPokemon
 		// TODO Auto-generated method stub
 		
 	}
+	
+	@Override
+	protected String getTipo()
+	{
+		return encapsulado.getTipo() + " De Fuego";
+	}
+	
+	@Override
+	public String toString()
+	{
+		return encapsulado.toString() + this.getTipo();
+	}
 }
