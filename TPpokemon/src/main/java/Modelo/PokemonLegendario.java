@@ -48,5 +48,11 @@ public class PokemonLegendario extends Pokemon
 	{
 		this.fuerza *= 0.4;
 	}
+
+	@Override
+	public String toString()
+	{
+		return super.toString()+ " ,Tipo: PokemonLegendario";
+	}
 	
 }

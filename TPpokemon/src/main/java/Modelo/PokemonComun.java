@@ -46,4 +46,11 @@ public class PokemonComun extends Pokemon
 		this.fuerza *= 0.8;
 	}
 	
+	@Override
+	public String toString()
+	{
+		return super.toString()+ " ,Tipo: PokemonComun";
+	}
+	
+	
 }

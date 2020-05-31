@@ -31,6 +31,10 @@ public class PokemonFactory
 			else if(elem.equalsIgnoreCase("Tierra"))
 				respuesta = new DecoratorTierra(encapsulado);
 		}
+		else if(encapsulado != null && elemento == null)
+				respuesta = encapsulado;
+			
+		
 		return respuesta;
 	}
 }

@@ -44,6 +44,11 @@ public class Torneo
 	{
 		return nombre;
 	}
+	
+	public void setNombre(String nombre)
+	{
+		this.nombre = nombre;
+	}
 
 	/**
 	 * Estem método se encarga de agregar un entrenador a la lista de los mismos.

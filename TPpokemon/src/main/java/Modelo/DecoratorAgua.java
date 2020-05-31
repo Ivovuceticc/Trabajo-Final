@@ -72,5 +72,10 @@ public class DecoratorAgua extends DecoratorPokemon
 		this.encapsulado.hechizoTormenta();
 		this.vitalidad *= 0.8;
 	}
-
+	
+	@Override
+	public String toString()
+	{
+		return encapsulado.toString() +" ,Agua:Hada";
+	}
 }

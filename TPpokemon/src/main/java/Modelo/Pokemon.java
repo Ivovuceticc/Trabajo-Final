@@ -52,8 +52,8 @@ public abstract class Pokemon implements Hechizable
 	@Override
 	public String toString()
 	{
-		return "Pokemon [nombre=" + nombre + ", escudo=" + escudo + ", vitalidad=" + vitalidad + ", fuerza=" + fuerza
-				+ ", experiencia=" + experiencia + "]";
+		return "Pokemon nombre=" + nombre + ", escudo=" + escudo + ", vitalidad=" + vitalidad + ", fuerza=" + fuerza
+				+ ", experiencia=" + experiencia;
 	}
 	
 }
