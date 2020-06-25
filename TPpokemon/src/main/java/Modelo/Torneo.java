@@ -13,7 +13,6 @@ import java.util.ArrayList;
  */
 public class Torneo
 {
-	private String nombre;
 	private ArrayList<Entrenador> listaEntrenadores;
 	private final int cantidadEntrenadores;
 	private static Torneo instanceTorneo = null;
@@ -25,7 +24,7 @@ public class Torneo
 	 */
 	private Torneo()
 	{	
-		this.cantidadEntrenadores = 8;
+		this.cantidadEntrenadores = 1;
 		this.listaEntrenadores = new ArrayList<Entrenador>(cantidadEntrenadores);
 		this.ronda = new Ronda();
 	}
@@ -42,16 +41,6 @@ public class Torneo
 		return instanceTorneo;
 	}
 
-	public String getNombre()
-	{
-		return nombre;
-	}
-	
-	public void setNombre(String nombre)
-	{
-		this.nombre = nombre;
-	}
-
 	/**
 	 * Estem método se encarga de agregar un entrenador a la lista de los mismos.
 	 * <br>
@@ -59,6 +48,16 @@ public class Torneo
 	public void agregaEntrenador(Entrenador entrenador)
 	{
 		this.listaEntrenadores.add(entrenador);
+	}
+	
+	public int getCantidadEntrenadores()
+	{
+		return cantidadEntrenadores;
+	}
+
+	public ArrayList<Entrenador> getListaEntrenadores()
+	{
+		return listaEntrenadores;
 	}
 
 	/**
@@ -74,6 +73,7 @@ public class Torneo
 		{	
 			listaEntrenadores = ronda.inicia(listaEntrenadores);
 		}
+		//Aca voy a tener que hacer algo con el ganador
 	}
 
 }

@@ -3,7 +3,7 @@ package Modelo;
 
 public class PokemonFactory
 {
-	public static Pokemon getPokemon(String nombre, String tipo, Object elemento)
+	public static Pokemon getPokemon(String nombre, String tipo, String elemento)
 	{
 		Pokemon encapsulado = null;
 		Pokemon respuesta = null;
@@ -13,7 +13,7 @@ public class PokemonFactory
 		else if (tipo.equalsIgnoreCase("Legendario"))
 			encapsulado = new PokemonLegendario(nombre);
 
-		if (encapsulado != null && elemento != null)
+		if (encapsulado != null && elemento != "")
 		{
 			String elem = (String)elemento;
 			if(elem.equalsIgnoreCase("Fuego"))
@@ -22,16 +22,12 @@ public class PokemonFactory
 				respuesta = new DecoratorAgua(encapsulado);
 			else if(elem.equalsIgnoreCase("Roca"))
 				respuesta = new DecoratorRoca(encapsulado);
-			else if(elem.equalsIgnoreCase("Electrico"))
-				respuesta = new DecoratorElectrico(encapsulado);
 			else if(elem.equalsIgnoreCase("Hada"))
 				respuesta = new DecoratorHada(encapsulado);
 			else if(elem.equalsIgnoreCase("Hielo"))
 				respuesta = new DecoratorHielo(encapsulado);
-			else if(elem.equalsIgnoreCase("Tierra"))
-				respuesta = new DecoratorTierra(encapsulado);
 		}
-		else if(encapsulado != null && elemento == null)
+		else if(encapsulado != null && elemento == "")
 				respuesta = encapsulado;
 			
 		

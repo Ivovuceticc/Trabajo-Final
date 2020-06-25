@@ -25,10 +25,9 @@ public class DecoratorFuego extends DecoratorPokemon
 	@Override
 	protected void recibeDano(double dano)
 	{
-		if(auraDeFuego)
+		if (auraDeFuego)
 			this.vitalidad *= 1.1;
-		
-		
+
 		if (dano < (this.vitalidad + this.escudo))
 		{
 			if (dano * 0.5 < this.escudo)
@@ -41,14 +40,12 @@ public class DecoratorFuego extends DecoratorPokemon
 					this.escudo -= (dano * 0.5 - this.vitalidad);
 					this.vitalidad = 0;
 				}
-			} 
-			else
-			{	
+			} else
+			{
 				this.vitalidad -= (dano - this.escudo);
 				this.escudo = 0;
 			}
-		}
-		else
+		} else
 		{
 			this.escudo = 0;
 			this.vitalidad = 0;
@@ -61,22 +58,21 @@ public class DecoratorFuego extends DecoratorPokemon
 		{
 			this.fuerza *= 1.1;
 			this.vitalidad *= 1.1;
-		}
-		else
+		} else
 			encapsulado.recarga();
 	}
 
 	public void hechizoNiebla()
 	{
 		this.encapsulado.hechizoNiebla();
-		if(this.auraDeFuego)
+		if (this.auraDeFuego)
 			this.auraDeFuego = false;
 	}
 
 	public void hechizoViento()
 	{
 		this.encapsulado.hechizoViento();
-		if(this.recargaFuego)
+		if (this.recargaFuego)
 			this.recargaFuego = false;
 	}
 
@@ -85,16 +81,27 @@ public class DecoratorFuego extends DecoratorPokemon
 		this.encapsulado.hechizoTormenta();
 		this.escudo *= 0.8;
 	}
+
 	@Override
 	protected String getTipo()
 	{
 		return encapsulado.getTipo() + " De Fuego";
 	}
-	
+
+
+	@Override
+	public Object clone() throws CloneNotSupportedException
+	{
+		DecoratorFuego decoradorClonado = null;
+		decoradorClonado = (DecoratorFuego) super.clone();
+		decoradorClonado.encapsulado = (Pokemon) encapsulado.clone();
+		return decoradorClonado;
+	}
+
 	@Override
 	public String toString()
 	{
-		return  "Pokemon nombre=" + nombre + ", escudo=" + escudo + ", vitalidad=" + vitalidad + ", fuerza=" + fuerza
-				+ ", experiencia=" + experiencia + this.getTipo();
+		return "Pokemon nombre=" + nombre + ", escudo=" + escudo + ", vitalidad=" + vitalidad + ", fuerza=" + fuerza
+				+ ", experiencia=" + experiencia + this.getTipo() + " encapsulado: " + encapsulado;
 	}
 }

@@ -6,4 +6,5 @@ public interface ICarta
 	void setCantidad(int cantidad);
 	int getCantidad();
 	String getNombre();
+	Object clone(); 
 }

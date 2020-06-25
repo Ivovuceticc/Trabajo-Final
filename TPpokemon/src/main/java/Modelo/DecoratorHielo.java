@@ -93,7 +93,16 @@ public class DecoratorHielo extends DecoratorPokemon
 	public String toString()
 	{
 		return  "Pokemon nombre=" + nombre + ", escudo=" + escudo + ", vitalidad=" + vitalidad + ", fuerza=" + fuerza
-				+ ", experiencia=" + experiencia + this.getTipo();
+				+ ", experiencia=" + experiencia + this.getTipo()+ " encapsulado: " + encapsulado;
+	}
+	
+	@Override
+	public Object clone() throws CloneNotSupportedException
+	{
+		DecoratorHielo decoradorClonado = null;
+		decoradorClonado = (DecoratorHielo)super.clone();
+		decoradorClonado.encapsulado = (Pokemon)encapsulado.clone();
+		return decoradorClonado; 
 	}
 	
 }

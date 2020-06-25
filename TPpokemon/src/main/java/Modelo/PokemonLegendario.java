@@ -60,5 +60,11 @@ public class PokemonLegendario extends Pokemon
 	{
 		return super.toString()+ this.getTipo();
 	}
+
+	@Override
+	public Object clone() throws CloneNotSupportedException
+	{
+		throw new CloneNotSupportedException("No se puede clonar un pokemon legendario!!");
+	}
 	
 }

@@ -9,4 +9,9 @@ public abstract class DecoratorPokemon extends Pokemon
 		super(encapsulado.nombre);	
 		this.encapsulado = encapsulado;
 	}
+	
+	public Pokemon getEncapsulado()
+	{
+		return encapsulado;
+	}
 }

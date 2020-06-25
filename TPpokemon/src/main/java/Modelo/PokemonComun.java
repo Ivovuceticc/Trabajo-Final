@@ -57,4 +57,21 @@ public class PokemonComun extends Pokemon
 	{
 		return super.toString()+ this.getTipo();
 	}
+
+	@Override
+	public Object clone() 
+	{
+		PokemonComun pokemonClonado = null;
+		
+			try
+			{
+				pokemonClonado = (PokemonComun)super.clone();
+			} 
+			catch (CloneNotSupportedException e)
+			{
+				e.printStackTrace();
+			}
+			return pokemonClonado;
+	}
+	
 }

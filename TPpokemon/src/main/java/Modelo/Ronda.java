@@ -21,10 +21,10 @@ public class Ronda
 		
 		while (cantidadEntrenadores> 0)
 		{	
-			posRandom = generador.nextInt(cantidadEntrenadores-1);
+			posRandom = generador.nextInt(cantidadEntrenadores);
 			entrenadorA = entrenadoresRonda.get(posRandom);
 			entrenadoresRonda.remove(posRandom);
-			posRandom = generador.nextInt(cantidadEntrenadores-2);
+			posRandom = generador.nextInt(cantidadEntrenadores-1);
 			entrenadorB = entrenadoresRonda.get(posRandom);
 			entrenadoresRonda.remove(posRandom);
 			

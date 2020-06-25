@@ -1,6 +1,6 @@
 package Modelo;
 
-public class CartaViento implements ICarta
+public class CartaViento implements ICarta, Cloneable
 {	
 	protected int cantidad;
 	public String Nombre;
@@ -38,4 +38,19 @@ public class CartaViento implements ICarta
 	{
 		return "CartaViento [cantidad=" + cantidad + ", Nombre=" + Nombre + "]";
 	}
+
+	@Override
+	public Object clone() 
+	{
+		CartaViento cartaClone = null;
+		try
+		{
+			cartaClone = (CartaViento)super.clone();
+		} catch (CloneNotSupportedException e)
+		{
+			e.printStackTrace();
+		}
+		return cartaClone;
+	}
+
 }
