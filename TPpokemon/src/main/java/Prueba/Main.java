@@ -13,7 +13,6 @@ public class Main
 	{	
 		/*
 		Torneo torneo = Torneo.getInstance();
-		torneo.setNombre("ESCUDO Y ESPADA");
 		
 		Entrenador entrenador1 = new Entrenador("Lucas");
 		Entrenador entrenador2 = new Entrenador("Lucia");

@@ -1,6 +1,8 @@
 package Modelo;
 
 import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 
 /**
  * @author Ivo Vucetic<br>
@@ -11,22 +13,34 @@ import java.util.ArrayList;
  *         hara referencia a una sola instancia del torneo y una lista con las
  *         rondas del mismo.
  */
-public class Torneo
+public class Torneo extends Observable implements Observer
 {
 	private ArrayList<Entrenador> listaEntrenadores;
 	private final int cantidadEntrenadores;
+	private final int cantidadArenas;
 	private static Torneo instanceTorneo = null;
 	private Ronda ronda;
+	private ArrayList<Arena> listaArenas;
 
 	/**
 	 * Constructor para iniciar la lista que contendra a los entrenadores y las
 	 * rondas. <br>
 	 */
 	private Torneo()
-	{	
-		this.cantidadEntrenadores = 1;
+	{
+		this.cantidadEntrenadores = 8;
+		this.cantidadArenas = 2;
 		this.listaEntrenadores = new ArrayList<Entrenador>(cantidadEntrenadores);
+		this.listaArenas = new ArrayList<Arena>(cantidadArenas);
 		this.ronda = new Ronda();
+		this.agregaArena(new Arena("Norte"));
+		this.agregaArena(new Arena("Sur"));
+	}
+
+	public void agregaArena(Arena arena)
+	{
+		this.listaArenas.add(arena);
+		arena.addObserver(this);
 	}
 
 	/**
@@ -49,7 +63,7 @@ public class Torneo
 	{
 		this.listaEntrenadores.add(entrenador);
 	}
-	
+
 	public int getCantidadEntrenadores()
 	{
 		return cantidadEntrenadores;
@@ -70,10 +84,17 @@ public class Torneo
 	public void iniciaTorneo()
 	{
 		while (listaEntrenadores.size() > 1)
-		{	
-			listaEntrenadores = ronda.inicia(listaEntrenadores);
+		{
+			ronda.inicia(listaEntrenadores, listaArenas);
 		}
-		//Aca voy a tener que hacer algo con el ganador
+		// Aca voy a tener que hacer algo con el ganador
+	}
+
+	@Override
+	public void update(Observable arg0, Object arg1)
+	{
+		// El torneo va a escuchar a la arena que es el observable y el objeto sera el entrenador que gane
+
 	}
 
 }

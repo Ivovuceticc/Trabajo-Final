@@ -2,6 +2,8 @@ package Controlador;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Observable;
+import java.util.Observer;
 
 import Modelo.Entrenador;
 import Modelo.Pokemon;
@@ -12,7 +14,7 @@ import Vista.IVistamenu;
 import Vista.VentanaInscripcion;
 import Vista.VentanaMenu;
 
-public class Controlador implements ActionListener
+public class Controlador implements ActionListener, Observer
 {
 	private IVistamenu ventanaMenu;
 	private IVistaInscripcion ventanaInscripcion;
@@ -25,6 +27,7 @@ public class Controlador implements ActionListener
 		this.ventanaMenu.setActionListener(this);
 		this.torneo = Torneo.getInstance();
 		this.contadorEntrenadores = torneo.getCantidadEntrenadores();
+		this.torneo.addObserver(this);
 	}
 
 	public void setVentanaMenu(IVistamenu ventanaMenu)
@@ -83,6 +86,14 @@ public class Controlador implements ActionListener
 		this.ventanaInscripcion
 				.agregaLog("--Se agrega pokemon a la lista de pokemones--\n " + pokemon.toString() + "\n");
 
+	}
+
+	@Override
+	public void update(Observable o, Object arg)
+	{	
+		if (arg != this.tablero)
+			throw new InvalidParameterException();
+		
 	}
 
 }
