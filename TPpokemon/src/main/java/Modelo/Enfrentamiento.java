@@ -2,7 +2,7 @@ package Modelo;
 
 public class Enfrentamiento extends Thread
 {
-	private Entrenador entrenador1, entrenador2;
+	private Entrenador entrenador1, entrenador2, ganador;
 	private Arena arena;
 	private int numeroEnfrentamiento;
 
@@ -24,7 +24,7 @@ public class Enfrentamiento extends Thread
 	@Override
 	public String toString()
 	{
-		return "Enfrentamiento [entrenador1=" + entrenador1.toString() + ", entrenador2=" + entrenador2.toString() + ", arena=" + arena.getNombre()
+		return "Enfrentamiento [entrenador1=" + entrenador1.getNombre() + ", entrenador2=" + entrenador2.getNombre() + ", arena=" + arena.getNombre()
 				+ ", numeroEnfrentamiento=" + numeroEnfrentamiento + "]";
 	}
 
@@ -37,4 +37,16 @@ public class Enfrentamiento extends Thread
 	{
 		return entrenador2;
 	}
+
+	public Entrenador getGanador()
+	{
+		return ganador;
+	}
+
+	public void setGanador(Entrenador ganador)
+	{
+		this.ganador = ganador;
+	}
+	
+	
 }

@@ -59,7 +59,7 @@ public class Controlador implements ActionListener, Observer
 			this.ventanaInscripcion.deshabilitaElemento();
 		else if (comando.equalsIgnoreCase("INICIA TORNEO"))
 		{
-
+			this.torneo.iniciaTorneo();
 		}
 		this.ventanaInscripcion.actualizarListaEntrenador(this.torneo.getListaEntrenadores().iterator());
 	}
@@ -87,7 +87,8 @@ public class Controlador implements ActionListener, Observer
 				.agregaLog("--Se agrega pokemon a la lista de pokemones--\n " + pokemon.toString() + "\n");
 
 	}
-
+	
+	/*
 	@Override
 	public void update(Observable o, Object arg)
 	{	
@@ -95,5 +96,5 @@ public class Controlador implements ActionListener, Observer
 			throw new InvalidParameterException();
 		
 	}
-
+	*/
 }

@@ -18,13 +18,13 @@ public class Definicion implements IState
 	@Override
 	public void presentarRivales(Entrenador entrenador1, Entrenador entrenador2)
 	{
-		System.out.println("Los rivales ya fueron presentados!!");
+		throw new IllegalStateException("Los rivales ya fueron presentados!!");
 	}
 
 	@Override
 	public void comenzarBatalla()
 	{
-		System.out.println("La batalla termino.");
+		throw new IllegalStateException("La batalla termino.");
 	}
 
 	@Override
@@ -49,9 +49,12 @@ public class Definicion implements IState
 			ganador = entrenadorA;
 		}
 		
-		//Ver lo que obtiene cuando gana
+		ganador.setPuntosDeBatalla(200);
+		//Podra ganar el pokemon contrario
+		
 		this.arena.setOcupada(false);
 		this.arena.notifyAll();
+		
 	}
 	
 }

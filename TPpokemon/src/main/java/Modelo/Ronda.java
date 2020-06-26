@@ -5,7 +5,7 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.Random;
 
-public class Ronda implements Observer
+public class Ronda 
 {
 
 	public Ronda()
@@ -13,7 +13,7 @@ public class Ronda implements Observer
 
 	}
 
-	public void inicia(ArrayList<Entrenador> entrenadoresRonda, ArrayList<Arena> arenas)
+	public ArrayList<Entrenador> inicia(ArrayList<Entrenador> entrenadoresRonda, ArrayList<Arena> arenas)
 	{
 		ArrayList<Entrenador> auxList = new ArrayList<Entrenador>();
 		Entrenador entrenadorA, entrenadorB;
@@ -29,20 +29,18 @@ public class Ronda implements Observer
 			posRandom = generador.nextInt(cantidadEntrenadores-1);
 			entrenadorB = entrenadoresRonda.get(posRandom);
 			entrenadoresRonda.remove(posRandom);
-			enfrentamientos[++numeroEnfrent] = new Enfrentamiento(entrenadorA, entrenadorB, arenas.get(generador.nextInt(2)), numeroEnfrent);
+			enfrentamientos[++numeroEnfrent] = new Enfrentamiento(entrenadorA, entrenadorB, arenas.get(generador.nextInt(arenas.size())), numeroEnfrent);
 			
 			cantidadEntrenadores = entrenadoresRonda.size();
 		}
 		
 		for(int i = 0; i <= numeroEnfrent; i++)
 			enfrentamientos[i].start();
-			
+		
+		for(int j = 0; j <= numeroEnfrent; j++)
+			auxList.add(enfrentamientos[j].getGanador());
+		
+		return auxList;
 	}
 
-	@Override
-	public void update(Observable o, Object arg)
-	{
-		// TODO Auto-generated method stub
-		
-	}
 }

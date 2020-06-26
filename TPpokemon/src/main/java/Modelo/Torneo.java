@@ -28,13 +28,14 @@ public class Torneo extends Observable implements Observer
 	 */
 	private Torneo()
 	{
-		this.cantidadEntrenadores = 8;
-		this.cantidadArenas = 2;
+		this.cantidadEntrenadores = 4;
+		this.cantidadArenas = 3;
 		this.listaEntrenadores = new ArrayList<Entrenador>(cantidadEntrenadores);
 		this.listaArenas = new ArrayList<Arena>(cantidadArenas);
 		this.ronda = new Ronda();
 		this.agregaArena(new Arena("Norte"));
 		this.agregaArena(new Arena("Sur"));
+		this.agregaArena(new Arena("Oeste"));
 	}
 
 	public void agregaArena(Arena arena)
@@ -85,15 +86,21 @@ public class Torneo extends Observable implements Observer
 	{
 		while (listaEntrenadores.size() > 1)
 		{
-			ronda.inicia(listaEntrenadores, listaArenas);
+			listaEntrenadores = ronda.inicia(listaEntrenadores, listaArenas);
 		}
-		// Aca voy a tener que hacer algo con el ganador
+		System.out.println("El ganador es:"+ listaEntrenadores.get(0).toString());
 	}
 
 	@Override
-	public void update(Observable arg0, Object arg1)
+	public void update(Observable observable, Object arg1)
 	{
-		// El torneo va a escuchar a la arena que es el observable y el objeto sera el entrenador que gane
+		Arena arena = (Arena) observable;
+		if (this.listaArenas.contains(arena))
+		{
+			System.out.println("El estado de la arena "+ arena.getNombre()+" es: "+ arg1);
+		}
+		else
+			throw new IllegalArgumentException();
 
 	}
 

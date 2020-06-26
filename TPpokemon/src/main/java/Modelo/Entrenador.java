@@ -176,5 +176,10 @@ public class Entrenador implements Cloneable, Clasificable
 
 		return st.toString();
 	}
+
+	public void setPuntosDeBatalla(int puntosDeBatalla)
+	{
+		this.puntosDeBatalla = puntosDeBatalla;
+	}
 	
 }

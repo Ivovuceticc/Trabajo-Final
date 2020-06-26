@@ -20,7 +20,7 @@ public class Batalla implements IState
 	@Override
 	public void presentarRivales(Entrenador entrenador1, Entrenador entrenador2)
 	{
-		System.out.println("Ya fueron presentados los entrenadores junto con los pokemones que se enfrentaran en la batalla!!");
+		throw new IllegalStateException("Ya fueron presentados los entrenadores junto con los pokemones que se enfrentaran en la batalla!!");
 	}
 
 	@Override
@@ -76,8 +76,8 @@ public class Batalla implements IState
 
 	@Override
 	public void obtenerResultados()
-	{
-		System.out.println("No se pueden obtener los resultados hasta que se enfrenten!!");
+	{	
+		throw new IllegalStateException("No se pueden obtener los resultados hasta que se enfrenten!!");
 	}
 	
 	
