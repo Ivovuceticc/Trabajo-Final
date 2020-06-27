@@ -4,15 +4,6 @@ import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
-/**
- * @author Ivo Vucetic<br>
- * 
- *         Esta clase representa el funcionamiento de un torneo eliminatorio
- *         para 8 competidores. Cuenta con el conjunto de entrenadores que
- *         participaran en dicho torneo, el nombre del torneo, una variable que
- *         hara referencia a una sola instancia del torneo y una lista con las
- *         rondas del mismo.
- */
 public class Torneo extends Observable implements Observer
 {
 	private ArrayList<Entrenador> listaEntrenadores;
@@ -22,10 +13,6 @@ public class Torneo extends Observable implements Observer
 	private Ronda ronda;
 	private ArrayList<Arena> listaArenas;
 
-	/**
-	 * Constructor para iniciar la lista que contendra a los entrenadores y las
-	 * rondas. <br>
-	 */
 	private Torneo()
 	{
 		this.cantidadEntrenadores = 4;
@@ -44,11 +31,6 @@ public class Torneo extends Observable implements Observer
 		arena.addObserver(this);
 	}
 
-	/**
-	 * Este método nos devuelve una instancia única del torneo. <br>
-	 * 
-	 * @return Referencia de tipo Torneo
-	 */
 	public static Torneo getInstance()
 	{
 		if (Torneo.instanceTorneo == null)
@@ -56,10 +38,6 @@ public class Torneo extends Observable implements Observer
 		return instanceTorneo;
 	}
 
-	/**
-	 * Estem método se encarga de agregar un entrenador a la lista de los mismos.
-	 * <br>
-	 */
 	public void agregaEntrenador(Entrenador entrenador)
 	{
 		this.listaEntrenadores.add(entrenador);
@@ -75,13 +53,6 @@ public class Torneo extends Observable implements Observer
 		return listaEntrenadores;
 	}
 
-	/**
-	 * Este método se encarga de crear la ronda para luego delegar el trabajo de
-	 * iniciarla. <br>
-	 * <b>Pre:</b> numero >= 0
-	 * 
-	 * @param numero: Representa la actual.
-	 */
 	public void iniciaTorneo()
 	{
 		while (listaEntrenadores.size() > 1)

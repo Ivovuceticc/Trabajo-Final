@@ -36,7 +36,7 @@ public class DecoratorAgua extends DecoratorPokemon
 			if (dano < (this.escudo + this.vitalidad))
 				this.vitalidad -= dano - this.escudo;
 			else
-				this.vitalidad = 0;					//Ver que pasa cuando muere
+				this.vitalidad = 0;					
 			this.escudo = 0;
 		}
 		
