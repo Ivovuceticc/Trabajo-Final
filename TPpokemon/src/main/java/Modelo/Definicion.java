@@ -1,5 +1,7 @@
 package Modelo;
 
+import java.util.Random;
+
 public class Definicion implements IState
 {
 	private Arena arena;
@@ -30,8 +32,9 @@ public class Definicion implements IState
 	@Override
 	public void obtenerResultados()
 	{
-		Entrenador ganador;
+		Entrenador ganador, perdedor;
 		double puntajeA, puntajeB;
+		Random r = new Random();
 
 		puntajeA = pokemonA.vitalidad + pokemonA.escudo + pokemonA.fuerza;
 		puntajeB = pokemonB.vitalidad + pokemonB.escudo + pokemonB.fuerza;
@@ -41,16 +44,23 @@ public class Definicion implements IState
 			pokemonB.experiencia += 3;
 			pokemonA.experiencia += 1;
 			ganador = entrenadorB;
+			perdedor = entrenadorA;
 			
 		} else
 		{
 			pokemonA.experiencia += 3;
 			pokemonB.experiencia += 1;
 			ganador = entrenadorA;
+			perdedor = entrenadorB;
 		}
 		
 		ganador.setPuntosDeBatalla(200);
-		//Podra ganar el pokemon contrario
+		System.out.println("Ahora podrás quedarte con uno de sus pokemones!! ademas de recibir puntos de batalla!");
+		int tamaño = perdedor.getListaPokemones().size();
+		int numAleatorio = r.nextInt(tamaño);
+		Pokemon pokemon = perdedor.getListaPokemones().get(numAleatorio);
+		perdedor.getListaPokemones().remove(numAleatorio);
+		ganador.getListaPokemones().add(pokemon);
 		
 		this.arena.setOcupada(false);
 		this.arena.notifyAll();

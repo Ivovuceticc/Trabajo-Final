@@ -10,7 +10,7 @@ public class Entrenador implements Cloneable, Clasificable
 	private ArrayList<Pokemon> listaPokemones;
 	private static final int cantidadPokemones = 3;
 	private static final int cantidadTipoCartas = 3;
-	private static final int numeroCartasParaUso = 2;
+	private static final int numeroCartasParaUso = 3;
 	private ArrayList<ICarta> listaCartas;
 	private int numeroCartasUsadas = 0, puntosDeBatalla = 0;
 	private String categoria;

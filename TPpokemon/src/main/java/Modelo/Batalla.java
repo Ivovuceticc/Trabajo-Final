@@ -2,12 +2,24 @@ package Modelo;
 
 import java.util.Random;
 
+/**
+ * @author Vucetic Ivo<br>
+ *Esta clase representa el estado en el que los entrenadores van a batallar. Cuenta con una referencia a la arena que se esta utilizando, los entrenadores y sus respectivos pokemones.<br> 
+ */
 public class Batalla implements IState
 {	
 	private Arena arena;
 	private Entrenador entrenadorA, entrenadorB;
 	private Pokemon pokemonA, pokemonB;
 
+	/**
+	 * Constructor con cinco parámetros, dos para setear a los entrenadores, dos para setear a los pokemones y uno para setear la arena que se usará.<br>
+	 * @param entrenador1: Parámetro de tipo Entrenador que representa uno de los entrenadores a enfrentarse.<br>
+	 * @param entrenador2: Parámetro de tipo Entrenador que representa uno de los entrenadores a enfrentarse.<br>
+	 * @param pokemon1: Parámetro de tipo Pokemon que representa al pokemon del entrenador1.<br>
+	 * @param pokemon2: Parámetro de tipo Pokemon que representa al pokemon del entrenador2.<br>
+	 * @param arena: Parámetro de tipo arena que representa una de las arenas que tiene el  torneo en la cual se disputara la batalla.<br>
+	 */
 	public Batalla(Entrenador entrenador1, Entrenador entrenador2, Pokemon pokemon1, Pokemon pokemon2, Arena arena)
 	{
 		this.arena = arena;
@@ -17,12 +29,20 @@ public class Batalla implements IState
 		this.pokemonB = pokemon2;
 	}
 
+	/**
+	 *Este método arrojará una excepción del tipo IllegalStateException al querer presentar los rivales cuando el estado de la arena es Batalla. Dicha excepción nos indica que ya se realizó la presentación de los rivales.<br>
+	 */
 	@Override
-	public void presentarRivales(Entrenador entrenador1, Entrenador entrenador2)
+	public void presentarRivales(Entrenador entrenador1, Entrenador entrenador2) 
 	{
 		throw new IllegalStateException("Ya fueron presentados los entrenadores junto con los pokemones que se enfrentaran en la batalla!!");
 	}
 
+	/**
+	 *Al comenzar la batalla cada entrenador inicialmente tiene la posiblidad de elegir una carta hechizo para disminuir los atributos del pokemon rival. 
+	 *Luego de forma aleatoria se procederá a elegir cual de los pokemones comenzará el ataque.
+	 *Al finalizar la batalla el estado del torneo cambiará a Definición.
+	 */
 	@Override
 	public void comenzarBatalla()
 	{
@@ -74,118 +94,12 @@ public class Batalla implements IState
 		this.arena.setEstado(new Definicion(arena, entrenadorA, entrenadorB, pokemonA, pokemonB));	
 	}
 
+	/**
+	 *Este método arrojará una excepción del tipo IllegalStateException al querer obtener los resultados de una batalla que no se ha concretado. Dicha excepción nos indica que no se han enfrentado aun .<br>
+	 */
 	@Override
 	public void obtenerResultados()
 	{	
 		throw new IllegalStateException("No se pueden obtener los resultados hasta que se enfrenten!!");
 	}
-	
-	
-	
-	
-	
-	
-	
-	/*
-	protected Entrenador inicia(Entrenador entrenadorA, Entrenador entrenadorB)
-	{
-		Pokemon pokemonA = null, pokemonB = null;
-		Random generador = new Random();
-		ICarta cartaHechizo;
-
-		System.out.println("------ELECCION DE POKEMONES------");
-
-		System.out.println("-----Entrenador: " + entrenadorA.getNombre() + "-----");
-		try
-		{
-			pokemonA = entrenadorA.eligePokemon();
-		} catch (NumeroNoValidoException e)
-		{
-			e.getMessage();
-			pokemonA = entrenadorA.getListaPokemones().get(0);
-		}
-		try
-		{
-			cartaHechizo = entrenadorA.eligeCarta();
-			System.out.println(entrenadorA.getNombre() + "realiza un hechizo de " + cartaHechizo.getNombre()
-					+ " al pokemon de" + entrenadorB.getNombre());
-			cartaHechizo.hechizar(pokemonB);
-		} catch (ExcedeCantidadHechizosException e)
-		{
-			e.getMessage();
-		} catch (NumeroNoValidoException e)
-		{
-			e.getMessage();
-		}
-
-		System.out.println("-----Entrenador: " + entrenadorB.getNombre() + "-----");
-		try
-		{
-			pokemonB = entrenadorB.eligePokemon();
-		} catch (NumeroNoValidoException e)
-		{
-			e.getMessage();
-			pokemonB = entrenadorB.getListaPokemones().get(0);
-		}
-		try
-		{
-			cartaHechizo = entrenadorB.eligeCarta();
-			System.out.println(entrenadorB.getNombre() + "realiza un hechizo de " + cartaHechizo.getNombre()
-					+ " al pokemon de" + entrenadorB.getNombre());
-			cartaHechizo.hechizar(pokemonA);
-		} catch (ExcedeCantidadHechizosException e)
-		{
-			e.getMessage();
-		} catch (NumeroNoValidoException e)
-		{
-			e.getMessage();
-		}
-
-		if (generador.nextInt(2) == 0)
-		{
-			System.out.println("Comienza a atacar" + pokemonA.getNombre());
-			pokemonA.atacar(pokemonB);
-			System.out.println("Contrataca " + pokemonB.getNombre());
-			pokemonB.atacar(pokemonA);
-		} else
-		{
-			System.out.println("Comienza a atacar" + pokemonB.getNombre());
-			pokemonA.atacar(pokemonA);
-			System.out.println("Contrataca " + pokemonA.getNombre());
-			pokemonB.atacar(pokemonB);
-		}
-
-		return this.defineGanador(entrenadorA, entrenadorB, pokemonA, pokemonB);
-	}
-
-	private Entrenador defineGanador(Entrenador entrenadorA, Entrenador entrenadorB, Pokemon pokemonA, Pokemon pokemonB)
-	{
-		Entrenador ganador;
-		double puntajeA, puntajeB;
-
-		puntajeA = pokemonA.vitalidad + pokemonA.escudo + pokemonA.fuerza;
-		puntajeB = pokemonB.vitalidad + pokemonB.escudo + pokemonB.fuerza;
-
-		if (pokemonA.vitalidad == 0 || puntajeB > puntajeA)
-		{
-			pokemonB.experiencia += 3;
-			pokemonA.experiencia += 1;
-			ganador = entrenadorB;
-			
-		} else
-		{
-			pokemonA.experiencia += 3;
-			pokemonB.experiencia += 1;
-			ganador = entrenadorA;
-		}
-		this.obtenerPremio();	//Ver que le doy cuando gana
-		return ganador;
-	}
-
-	private void obtenerPremio()
-	{
-
-	}
-	
-	*/
 }
