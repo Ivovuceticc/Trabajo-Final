@@ -12,7 +12,7 @@ public class CartaNiebla implements ICarta, Cloneable
 	private String Nombre;
 
 	/**
-	 * Constructor para inicilizar la cantidad de cartas de este tipo y su nombre.
+	 * Constructor para inicilizar la cantidad de cartas(podrá usar hasta dos) de este tipo y su nombre.<br>
 	 */
 	public CartaNiebla()
 	{
@@ -21,8 +21,10 @@ public class CartaNiebla implements ICarta, Cloneable
 	}
 
 	/**
-	 *Este método 
-	 *@param hechizable:  
+	 *Por polimorfismo se hechizará con la Carta Niebla a un objeto de tipo Hehizable sufriendo las consecuencias de dicho hechizo dependiendo del tipo.<br>
+	 * <b>Pre:</b> hechizable debe ser distinto de null.
+	 * <b>Post:</b> Se lanza el hechizo.
+	 *@param hechizable: Parámetro de tipo Hechizable que representa un objeto que podría ser cualquiera de todos los tipo de pokemones del torneo(En este programa).<br> 
 	 */
 	public void hechizar(Hechizable hechizable)
 	{
@@ -52,6 +54,10 @@ public class CartaNiebla implements ICarta, Cloneable
 		return "CartaNiebla [cantidad=" + cantidad + ", Nombre=" + Nombre + "]";
 	}
 	
+	/**
+	 *Método que se encarga de clonar a la carta. Dicha carta se puede clonar siempre, por ende no arrojará excepción de tipo CloneNotSupportedException. <br>
+	 * <b>Post:</b> Se clona la CartaNiebla.
+	 */
 	@Override
 	public Object clone() 
 	{

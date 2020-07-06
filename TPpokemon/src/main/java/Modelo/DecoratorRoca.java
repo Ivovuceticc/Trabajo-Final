@@ -56,22 +56,21 @@ public class DecoratorRoca extends DecoratorPokemon
 	
 	public void hechizoNiebla()
 	{
-		this.encapsulado.hechizoNiebla();
 		if(this.auraDeRoca)
 			this.auraDeRoca = false;
+		this.vitalidad *= 0.9;
+		this.fuerza *= 0.9;
 	}
 
 	public void hechizoViento()
 	{
-		this.encapsulado.hechizoViento();
 		this.vitalidad *= 0.9;
-		this.escudo *= 0.9;
+		this.escudo *= 0.8;
 	}
 
 	public void hechizoTormenta()
 	{
-		this.encapsulado.hechizoTormenta();
-		this.vitalidad *= 0.8;
+		this.vitalidad *= 0.7;
 	}
 	@Override
 	protected String getTipo()

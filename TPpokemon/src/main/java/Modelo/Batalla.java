@@ -39,55 +39,79 @@ public class Batalla implements IState
 	}
 
 	/**
-	 *Al comenzar la batalla cada entrenador inicialmente tiene la posiblidad de elegir una carta hechizo para disminuir los atributos del pokemon rival. 
+	 *Al comenzar la batalla cada entrenador toma de forma aleatoria una carta hechizo para disminuir los atributos del pokemon rival.
+	 *Como se toma de forma aleatoria sin que tenga la posibilidad de pasar y no tomarla, puede que se haya agotado las cartas de un tipo en particular
+	 *o que no disponga de cartas para su uso, con lo cual se podrá arrojar una excepción del tipo ExcedeCantidadHechizosException.
 	 *Luego de forma aleatoria se procederá a elegir cual de los pokemones comenzará el ataque.
 	 *Al finalizar la batalla el estado del torneo cambiará a Definición.
+	 *<b>Post:</b> Se efecturá la batalla entre los dos entrenadores.<br>
 	 */
 	@Override
 	public void comenzarBatalla()
 	{
 		ICarta cartaHechizo;
 		Random generador = new Random();
+		int puntosUsados; boolean usoA = false, usoB = false;
+		
+		if(entrenadorA.getPuntosDeBatalla() > 0) 
+		{	
+			usoA = true;
+			puntosUsados = generador.nextInt(entrenadorA.getPuntosDeBatalla());
+			pokemonA.cambiarPuntosDeBatalla(puntosUsados);
+			entrenadorA.setPuntosDeBatalla(entrenadorA.getPuntosDeBatalla() - puntosUsados);
+			System.out.println("***"+ entrenadorA.getNombre()+" utilizo "+ puntosUsados +" puntos de batalla para su pokemon\n***");
+		}
+		
+		if(entrenadorB.getPuntosDeBatalla() > 0) 
+		{	
+			puntosUsados = generador.nextInt(entrenadorB.getPuntosDeBatalla());
+			pokemonB.cambiarPuntosDeBatalla(puntosUsados);
+			entrenadorB.setPuntosDeBatalla(entrenadorB.getPuntosDeBatalla() - puntosUsados);
+			System.out.println("***"+ entrenadorB.getNombre()+" utilizo "+ puntosUsados +" puntos de batalla para su pokemon\n***");
+		}
+		
+		if(usoA || usoB) 
+		{
+			System.out.println("\n-------Stats luego del uso de puntos de batalla -------");
+			System.out.println(this.pokemonA.toString());
+			System.out.println(this.pokemonB.toString() +"\n");
+		}	
 		
 		try
 		{
 			cartaHechizo = this.entrenadorA.eligeCarta();
-			System.out.println(entrenadorA.getNombre() + "realiza un hechizo de " + cartaHechizo.getNombre()
-					+ " al pokemon de" + entrenadorB.getNombre());
+			System.out.println("****"+entrenadorA.getNombre() + " realiza un hechizo de " + cartaHechizo.getNombre()
+					+ " al pokemon de " + entrenadorB.getNombre()+"****\n");
 			cartaHechizo.hechizar(pokemonB);
 		} catch (ExcedeCantidadHechizosException e)
 		{
 			e.getMessage();
-		} catch (NumeroNoValidoException e)
-		{
-			e.getMessage();
 		}
-		
 		try
 		{
 			cartaHechizo = entrenadorB.eligeCarta();
-			System.out.println(entrenadorB.getNombre() + "realiza un hechizo de " + cartaHechizo.getNombre()
-					+ " al pokemon de" + entrenadorB.getNombre());
+			System.out.println("****"+entrenadorB.getNombre() + " realiza un hechizo de " + cartaHechizo.getNombre()
+					+ " al pokemon de " + entrenadorA.getNombre()+"****\n");
 			cartaHechizo.hechizar(pokemonA);
 		} catch (ExcedeCantidadHechizosException e)
 		{
 			e.getMessage();
-		} catch (NumeroNoValidoException e)
-		{
-			e.getMessage();
-		}
+		} 
+		System.out.println("-------Stats luego de los hechizos-------");
+		System.out.println(this.pokemonA.toString());
+		System.out.println(this.pokemonB.toString() +"\n");
 		
 		if (generador.nextInt(2) == 0)
 		{
-			System.out.println("Comienza a atacar" + pokemonA.getNombre());
+			System.out.println("Comienza a atacar " + pokemonA.getNombre() +"!!!");
 			pokemonA.atacar(pokemonB);
-			System.out.println("Contrataca " + pokemonB.getNombre());
+			System.out.println("\n****Realiza el contrataque " + pokemonB.getNombre());
 			pokemonB.atacar(pokemonA);
 		} else
 		{
-			System.out.println("Comienza a atacar" + pokemonB.getNombre());
+			System.out.println("Comienza a atacar " + pokemonB.getNombre() +"!!!");
 			pokemonA.atacar(pokemonA);
-			System.out.println("Contrataca " + pokemonA.getNombre());
+			System.out.println("\n****Realiza el contrataque " + pokemonA.getNombre());
 			pokemonB.atacar(pokemonB);
 		}
 		

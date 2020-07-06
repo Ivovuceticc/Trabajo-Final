@@ -36,20 +36,21 @@ public class Arena extends Observable
 	public synchronized void ingresarArena(Enfrentamiento enfrentamiento)
 	{
 		while (ocupada)
-		{
+		{	
 			try
 			{
-				System.out.println("Un enfrentamiento quiere ingresar a la arena " + this.getNombre()
+				System.out.println("\nUn enfrentamiento quiere ingresar a la arena " + this.getNombre()
 						+ "es el enfrentamiento " + enfrentamiento.toString());
 				wait();
 			} catch (InterruptedException e)
 			{
 				e.printStackTrace();
 			}
+			
 		}
 		this.ocupada = true;
-		System.out.println("Ingreso en la arena " + enfrentamiento.toString());
-		this.notifyAll();
+		System.out.println("\nIngreso en la arena " + enfrentamiento.toString());
+		notifyAll();
 		this.presentarRivales(enfrentamiento.getEntrenador1(), enfrentamiento.getEntrenador2());
 		this.comenzarBatalla();
 		this.obtenerResultados();

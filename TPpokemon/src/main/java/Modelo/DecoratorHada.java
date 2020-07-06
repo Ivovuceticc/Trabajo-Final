@@ -40,21 +40,22 @@ public class DecoratorHada extends DecoratorPokemon
 
 	public void hechizoNiebla()
 	{
-		this.encapsulado.hechizoNiebla();
 		if(this.auraDeHada)
 			this.auraDeHada = false;
+		this.fuerza *= 0.7;
 	}
 
 	public void hechizoViento()
 	{
-		this.encapsulado.hechizoViento();
 		this.vitalidad *= 0.85;
 	}
 
 	public void hechizoTormenta()
 	{
-		this.encapsulado.hechizoTormenta();
+		if(this.auraDeHada)
+			this.auraDeHada = false;
 		this.fuerza *= 0.8;
+		this.escudo *= 0.9;
 	}
 	
 	@Override

@@ -5,16 +5,24 @@ import java.util.Random;
 public class SimulaPausa
 {
 	private static Random r = new Random();
-
+	private static final int esperaMax = 2000;
+	
 	public static void espera()
 	{	
 		try
 		{
-			Thread.sleep(r.nextInt(1000));
+			Thread.sleep(r.nextInt(SimulaPausa.esperaMax));
 		} 
 		catch (InterruptedException e)
 		{
 			e.printStackTrace();
 		}
 	}
+
+	public static int getEsperamax()
+	{
+		return esperaMax;
+	}
+	
+	
 }

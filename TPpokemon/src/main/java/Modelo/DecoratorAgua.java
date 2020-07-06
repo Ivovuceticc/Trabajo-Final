@@ -55,22 +55,23 @@ public class DecoratorAgua extends DecoratorPokemon
 
 	public void hechizoNiebla()
 	{
-		this.encapsulado.hechizoNiebla();
 		if(this.auraDeAgua)
 			this.auraDeAgua = false;
+		this.vitalidad *= 0.75;
+		this.escudo *= 0.9;
 	}
 
 	public void hechizoViento()
 	{
-		this.encapsulado.hechizoViento();
 		if(this.recargaAgua)
 			this.recargaAgua = false;
+		this.fuerza *= 0.8;
+		this.escudo *= 0.8;
 	}
 
 	public void hechizoTormenta()
 	{
-		this.encapsulado.hechizoTormenta();
-		this.vitalidad *= 0.8;
+		this.vitalidad *= 0.7;
 	}
 	@Override
 	protected String getTipo()

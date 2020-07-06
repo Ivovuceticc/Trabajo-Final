@@ -66,21 +66,23 @@ public class DecoratorHielo extends DecoratorPokemon
 	
 	public void hechizoNiebla()
 	{
-		this.encapsulado.hechizoNiebla();
 		if(this.auraDeHielo)
 			this.auraDeHielo = false;
+		this.escudo *= 0.85;
+		this.vitalidad *= 0.9;
+		this.fuerza *= 0.95;
 	}
 
 	public void hechizoViento()
 	{
-		this.encapsulado.hechizoViento();
 		if(this.granRecarga)
 			this.granRecarga = false;
+		this.vitalidad *= 0.9;
+		this.fuerza *= 0.8;
 	}
 
 	public void hechizoTormenta()
 	{
-		this.encapsulado.hechizoTormenta();
 		this.vitalidad *= 0.8;
 	}
 	@Override

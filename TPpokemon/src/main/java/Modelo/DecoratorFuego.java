@@ -64,22 +64,25 @@ public class DecoratorFuego extends DecoratorPokemon
 
 	public void hechizoNiebla()
 	{
-		this.encapsulado.hechizoNiebla();
 		if (this.auraDeFuego)
 			this.auraDeFuego = false;
+		this.vitalidad *= 0.85;
+		this.escudo *= 0.8;
 	}
 
 	public void hechizoViento()
 	{
-		this.encapsulado.hechizoViento();
 		if (this.recargaFuego)
 			this.recargaFuego = false;
+		this.vitalidad *= 0.85;
+		this.fuerza *= 0.9;
 	}
 
 	public void hechizoTormenta()
 	{
-		this.encapsulado.hechizoTormenta();
-		this.escudo *= 0.8;
+		if (this.recargaFuego)
+			this.recargaFuego = false;
+		this.escudo *= 0.5;
 	}
 
 	@Override

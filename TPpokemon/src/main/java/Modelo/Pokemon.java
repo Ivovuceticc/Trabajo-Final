@@ -43,7 +43,7 @@ public abstract class Pokemon implements Hechizable, Clasificable, Cloneable
 
 	protected void recarga()
 	{
-		System.out.println("No es posible recargarse");
+		System.out.println("\n "+this.nombre+ " No es posible que utilize la habilidad de recarga");
 	}
 
 	protected String getNombre()

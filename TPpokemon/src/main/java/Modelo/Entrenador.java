@@ -2,8 +2,17 @@ package Modelo;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Random;
 import java.util.Scanner;
 
+/**
+ * @author Vucetic Ivo<br>
+ *         Esta clase representa un entrenador.El mismo tendrá un nombre, dos
+ *         listas, una de los pokemones que usará en el torneo y otra con las
+ *         cartas hechizo, la categoria que podrá tener el entrenador y puntos
+ *         de batalla que podrá usar para subir el poder de sus pokemones.
+ *
+ */
 public class Entrenador implements Cloneable, Clasificable
 {
 	private String nombre;
@@ -13,8 +22,17 @@ public class Entrenador implements Cloneable, Clasificable
 	private static final int numeroCartasParaUso = 3;
 	private ArrayList<ICarta> listaCartas;
 	private int numeroCartasUsadas = 0, puntosDeBatalla = 0;
-	private String categoria;
+	private String categoria = "";
 
+	/**
+	 * Contructor con un parámetro para setear el nombre. Se inicializará las listas
+	 * de pokemones y cartas.<br>
+	 * Se creará una instancia para cada tipo de carta que podrá utilizar el
+	 * entrenador durante el torneo. <br>
+	 * 
+	 * @param nombre: parámetro de tipo String que representa el nombre de un
+	 *                entrenador.
+	 */
 	public Entrenador(String nombre)
 	{
 		this.nombre = nombre;
@@ -23,9 +41,17 @@ public class Entrenador implements Cloneable, Clasificable
 		this.listaCartas.add(new CartaNiebla());
 		this.listaCartas.add(new CartaViento());
 		this.listaCartas.add(new CartaTormenta());
-		
+
 	}
 
+	/**
+	 * Agrega un pokemon a la lista de pokemones. 
+	 * <b>Pre:</b> pokemon != null y la lista de pokemones debe estar previamente inicializada.<br>
+	 * <b>Post:</b> se agrega un pokemon a la lista.<br>
+	 * 
+	 * @param pokemon: parámetro de tipo Pokemon, que representa uno de los
+	 *                 pokemones que formará parte del equipo del entrenador.
+	 */
 	public void agregaPokemon(Pokemon pokemon)
 	{
 		this.listaPokemones.add(pokemon);
@@ -36,49 +62,61 @@ public class Entrenador implements Cloneable, Clasificable
 		return listaPokemones;
 	}
 
-	public Pokemon eligePokemon() throws NumeroNoValidoException
+	/**
+	 * Toma el pokemon con mayor poder de batalla(suma de vitalidad, escudo y
+	 * fuerza) de la lista de los pokemones y lo elimina de la lista ya que solo lo podrá usar para una batalla.
+	 * <br>
+	 * @return Devuelve el pokemon con mayor poder de batalla.
+	 */
+	public Pokemon eligePokemon()
 	{
-		Pokemon pokemon = null;
-		Scanner sc = new Scanner(System.in);
-		int i;
+		Pokemon pokemonMax = null, pokemonAct;
+		Iterator<Pokemon> it = this.listaPokemones.iterator();
+		double poder = 0, poderMax = 0;
 
-		System.out.println("------------------POKEDEX------------------");
-		for (i = 1; i <= this.listaPokemones.size(); i++)
-			System.out.println(i + "-" + this.listaPokemones.get(i - 1).toString());
-		i = sc.nextInt();
-		if (i > 0 && i <= this.listaPokemones.size())
+		while (it.hasNext())
 		{
-			pokemon = this.listaPokemones.get(i - 1);
-		} else
-			throw new NumeroNoValidoException("El numero no es valido, debe ser alguno de la lista mostrada", i);
-
-		return pokemon;
+			pokemonAct = it.next();
+			poder = pokemonAct.fuerza + pokemonAct.escudo + pokemonAct.vitalidad;
+			if (pokemonMax == null || poder > poderMax)
+			{
+				poderMax = poder;
+				pokemonMax = pokemonAct;
+			}
+		}
+		this.listaPokemones.remove(pokemonMax);
+		return pokemonMax;
 	}
 
-	public ICarta eligeCarta() throws ExcedeCantidadHechizosException, NumeroNoValidoException
+	/**
+	 * Se toma de forma aleatoria una carta de la lista, en el caso de que ya no
+	 * queden cartas de ese tipo, o si ya se usaron todas las cartas disponibles,
+	 * arrojará una excepción. Caso contrario aumentará en uno las cartas en uso y
+	 * se consume una de las cartas del tipo utilizado. <br>
+	 * @return En el caso de que no se arroje excepción devolverá una carta de su
+	 *         mazo.<br>
+	 * @throws ExcedeCantidadHechizosException: Nos dirá que ya no quedan cartas de
+	 *                                          ese tipo o que se han usado todas las cartas disponibles.
+	 */
+	public ICarta eligeCarta() throws ExcedeCantidadHechizosException
 	{
 		ICarta carta = null;
-		Scanner sc = new Scanner(System.in);
-		int i;
+		Random r = new Random();
 
-		if (this.numeroCartasUsadas < Entrenador.numeroCartasParaUso)
+		carta = this.listaCartas.get(r.nextInt(this.listaCartas.size()));
+		if (this.numeroCartasUsadas <= this.numeroCartasParaUso)
 		{
-			System.out.println("------------------CARTAS HECHIZO------------------");
-			for (i = 1; i <= Entrenador.cantidadTipoCartas; i++)
-				System.out.println(i + "-" + this.listaCartas.get(i - 1).toString());
-			i = sc.nextInt();
-			if (i > 0 && i <= Entrenador.cantidadTipoCartas)
-				if (this.listaCartas.get(i - 1).getCantidad() > 0)
-				{
-					carta = this.listaCartas.get(i - 1);
-					carta.setCantidad(carta.getCantidad() - 1);
-				} else
-					throw new NumeroNoValidoException("Se agoto la cantidad de veces que se podia usar la carta", i);
-			else
-				throw new NumeroNoValidoException("El numero no es valido, debe ser alguno de la lista mostrada", i);
-		} else
-			throw new ExcedeCantidadHechizosException("Se llego al limite de cartas hechizo que se pueden usar",
-					this.numeroCartasUsadas, Entrenador.numeroCartasParaUso);
+			if (carta.getCantidad() == 0)
+				throw new ExcedeCantidadHechizosException("Ya no quedan " + carta.getNombre() + " !!!", 2, 2);
+			else 
+			{	
+				this.numeroCartasUsadas++;
+				carta.setCantidad(carta.getCantidad()-1);
+			}
+		}
+		else
+			throw new ExcedeCantidadHechizosException("Se han usado todas las cartas hechizo!!!", this.numeroCartasParaUso, this.numeroCartasUsadas);
+
 		return carta;
 	}
 
@@ -97,12 +135,22 @@ public class Entrenador implements Cloneable, Clasificable
 	{
 		return this.categoria;
 	}
-	
+
 	public static int getCantidadpokemones()
 	{
 		return cantidadPokemones;
 	}
 
+	/**
+	 *Este método verificará si cambia la categoria de un entrenador. Para eso se sumará el nivel de experiencia de todos los pokemones 
+	 *con los que cuenta el entrenador. Si la experiencia acumulada es mayor que 0 pero inclusive menor a 50 y no tiene la categoria
+	 *de Principiante al momento de verificar el cambio, este cambiará a dicha categoria y se le sumará 400 puntos de batalla.
+	 *Si la experiencia acumulada es mayor que 50 pero inclusive menor a 100 y no tiene la categoria
+	 *de Intermedio al momento de verificar el cambio, este cambiará a dicha categoria y se le sumará 800 puntos de batalla.
+	 *Si la experiencia acumulada es mayor que 100 pero inclusive menor a 150 y no tiene la categoria
+	 *de Avanzado al momento de verificar el cambio, este cambiará a dicha categoria y se le sumará 1200 puntos de batalla.<br>
+	 *@return Devuelve verdadero en el caso de que haya cambiado de categoria o falso en caso contrario. 
+	 */
 	@Override
 	public boolean actualizaCategoria()
 	{
@@ -133,6 +181,13 @@ public class Entrenador implements Cloneable, Clasificable
 		return respuesta;
 	}
 
+	/**
+	 *Se encarga de clonar a un entrenador. Primero se encargará de clonar toda la lista de pokemones. Como dicha lista puede presentar pokemones 
+	 *que no puedan ser clonados es posible que se ejecute una excepcion del tipo CloneNotSupportedException. Luego se hará la clonación de las cartas
+	 *estas no tienen riesgo de generar la excepción previamente aclarada, lo mismo va para las variables de instancia primitivas.<br>
+	 *@exception CloneNotSupportedException: Cuando se intente clonar un pokemon que no acepte clonación.<br>
+	 *@return Devuelve al entrenador clonado o null en el caso de que ocurra la excepción.<br>
+	 */
 	@Override
 	public Object clone() throws CloneNotSupportedException
 	{
@@ -145,13 +200,12 @@ public class Entrenador implements Cloneable, Clasificable
 			int tamano = this.listaPokemones.size();
 			for (int i = 0; i < tamano; i++)
 				entrenadorClone.listaPokemones.add((Pokemon) this.listaPokemones.get(i).clone());
-			
-			
+
 			entrenadorClone.listaCartas = (ArrayList<ICarta>) this.listaCartas.clone();
 			entrenadorClone.listaCartas.clear();
 			int tamanoC = this.listaCartas.size();
 			for (int i = 0; i < tamanoC; i++)
-				entrenadorClone.listaCartas.add((ICarta)this.listaCartas.get(i).clone());	
+				entrenadorClone.listaCartas.add((ICarta) this.listaCartas.get(i).clone());
 		}
 		return entrenadorClone;
 	}
@@ -159,10 +213,14 @@ public class Entrenador implements Cloneable, Clasificable
 	@Override
 	public String toString()
 	{
-		return "Entrenador [nombre=" + nombre + ", numeroCartasParaUso=" + this.numeroCartasParaUso + ", puntosDeBatalla="
-				+ puntosDeBatalla + "]";
+		return "Entrenador [nombre=" + nombre + ", numeroCartasUsadas=" + this.numeroCartasUsadas
+				+ ", puntosDeBatalla=" + puntosDeBatalla + "]";
 	}
 
+	/**
+	 * Se detallan todos los pokemones que tiene el entrenador en su lista.<br>
+	 * @return String con cada uno de los pokemones.<br>
+	 */
 	public String detallePokemones()
 	{
 		StringBuilder st = new StringBuilder();
@@ -181,5 +239,5 @@ public class Entrenador implements Cloneable, Clasificable
 	{
 		this.puntosDeBatalla = puntosDeBatalla;
 	}
-	
+
 }
