@@ -38,9 +38,14 @@ public class Arena extends Observable
 		while (ocupada)
 		{	
 			try
-			{
+			{	
+				/*
 				System.out.println("\nUn enfrentamiento quiere ingresar a la arena " + this.getNombre()
 						+ "es el enfrentamiento " + enfrentamiento.toString());
+						
+				*/
+				this.setChanged();
+				this.notifyObservers(arg);
 				wait();
 			} catch (InterruptedException e)
 			{
@@ -49,7 +54,8 @@ public class Arena extends Observable
 			
 		}
 		this.ocupada = true;
-		System.out.println("\nIngreso en la arena " + enfrentamiento.toString());
+		//System.out.println("\nIngreso en la arena " + enfrentamiento.toString());
+		
 		notifyAll();
 		this.presentarRivales(enfrentamiento.getEntrenador1(), enfrentamiento.getEntrenador2());
 		this.comenzarBatalla();

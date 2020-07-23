@@ -2,15 +2,20 @@ package Controlador;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.security.InvalidParameterException;
+import java.util.Iterator;
 import java.util.Observable;
 import java.util.Observer;
 
+import Modelo.Arena;
 import Modelo.Entrenador;
 import Modelo.Pokemon;
 import Modelo.PokemonFactory;
 import Modelo.Torneo;
+import Vista.IVistaArenas;
 import Vista.IVistaInscripcion;
 import Vista.IVistamenu;
+import Vista.VentanaArena;
 import Vista.VentanaInscripcion;
 import Vista.VentanaMenu;
 
@@ -18,6 +23,7 @@ public class Controlador implements ActionListener, Observer
 {
 	private IVistamenu ventanaMenu;
 	private IVistaInscripcion ventanaInscripcion;
+	private IVistaArenas ventanaArenas;
 	private Torneo torneo;
 	private int contadorPokemones, contadorEntrenadores;
 
@@ -27,13 +33,7 @@ public class Controlador implements ActionListener, Observer
 		this.ventanaMenu.setActionListener(this);
 		this.torneo = Torneo.getInstance();
 		this.contadorEntrenadores = torneo.getCantidadEntrenadores();
-		this.torneo.addObserver(this);
-	}
-
-	public void setVentanaMenu(IVistamenu ventanaMenu)
-	{
-		this.ventanaMenu = ventanaMenu;
-		this.ventanaMenu.setActionListener(this);
+		this.agregaObservables();
 	}
 
 	@Override
@@ -59,6 +59,9 @@ public class Controlador implements ActionListener, Observer
 			this.ventanaInscripcion.deshabilitaElemento();
 		else if (comando.equalsIgnoreCase("INICIA TORNEO"))
 		{
+			this.ventanaInscripcion.cerrarVentana();
+			this.ventanaArenas = new VentanaArena();
+			this.ventanaArenas.setActionListener(this);
 			this.torneo.iniciaTorneo();
 		}
 		this.ventanaInscripcion.actualizarListaEntrenador(this.torneo.getListaEntrenadores().iterator());
@@ -87,14 +90,24 @@ public class Controlador implements ActionListener, Observer
 				.agregaLog("--Se agrega pokemon a la lista de pokemones--\n " + pokemon.toString() + "\n");
 
 	}
-	
-	/*
+
+	public void agregaObservables()
+	{
+		Iterator<Arena> it = this.torneo.getListaArenas().iterator();
+		while (it.hasNext())
+			it.next().addObserver(this);
+	}
+
 	@Override
 	public void update(Observable o, Object arg)
-	{	
-		if (arg != this.tablero)
+	{
+		if (o != this.torneo)
 			throw new InvalidParameterException();
-		
+		else
+		{
+
+		}
+
 	}
-	*/
+
 }

@@ -298,7 +298,7 @@ public class VentanaInscripcion extends JFrame implements IVistaInscripcion, Key
 	@Override
 	public void cerrarVentana()
 	{
-		// TODO Auto-generated method stub
+		this.dispose();
 	}
 
 	@Override

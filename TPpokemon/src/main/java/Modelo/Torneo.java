@@ -12,6 +12,10 @@ import java.util.Observer;
  * una variable de instancia static que determina una única instancia del torneo y una variable de instancia de tipo Ronda que determina la ronda actual en la que estarán los entrenadores.
  * 
  */
+/**
+ * @author Acer
+ *
+ */
 public class Torneo extends Observable implements Observer
 {
 	private ArrayList<Entrenador> listaEntrenadores;
@@ -27,14 +31,14 @@ public class Torneo extends Observable implements Observer
 	 */
 	private Torneo()
 	{
-		this.cantidadEntrenadores = 8;
+		this.cantidadEntrenadores = 2;
 		this.cantidadArenas = 3;
 		this.listaEntrenadores = new ArrayList<Entrenador>(cantidadEntrenadores);
 		this.listaArenas = new ArrayList<Arena>(cantidadArenas);
 		this.ronda = new Ronda();
-		this.agregaArena(new Arena("Norte"));
-		this.agregaArena(new Arena("Sur"));
 		this.agregaArena(new Arena("Oeste"));
+		this.agregaArena(new Arena("Central"));
+		this.agregaArena(new Arena("Este"));
 	}
 
 	/**
@@ -80,6 +84,11 @@ public class Torneo extends Observable implements Observer
 	public ArrayList<Entrenador> getListaEntrenadores()
 	{
 		return listaEntrenadores;
+	}
+	
+	public ArrayList<Arena> getListaArenas()
+	{
+		return listaArenas;
 	}
 
 	/**
