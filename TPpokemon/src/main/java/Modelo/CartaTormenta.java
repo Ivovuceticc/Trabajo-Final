@@ -1,12 +1,14 @@
 package Modelo;
 
+import java.io.Serializable;
+
 /**
  * @author Vucetic Ivo
  *Esta clase representa uno de los tres tipos de cartas que tienen cada entrenador, el tipo tormenta.<br>
  *Dispone de una cantidad de cartas de este tipo y su correspondiente nombre.<br>
  *Tendrá la posibilidad de clonarse.
  */
-public class CartaTormenta implements ICarta, Cloneable
+public class CartaTormenta implements ICarta, Cloneable, Serializable
 {
 	protected int cantidad;
 	public String Nombre;

@@ -2,12 +2,9 @@ package Controlador;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.security.InvalidParameterException;
-import java.util.Iterator;
 import java.util.Observable;
 import java.util.Observer;
 
-import Modelo.Arena;
 import Modelo.Entrenador;
 import Modelo.Pokemon;
 import Modelo.PokemonFactory;
@@ -26,14 +23,17 @@ public class Controlador implements ActionListener, Observer
 	private IVistaArenas ventanaArenas;
 	private Torneo torneo;
 	private int contadorPokemones, contadorEntrenadores;
+	private boolean leerAlta, escribirAlta;
 
-	public Controlador()
+	public Controlador(boolean leer, boolean escribir)
 	{
+		this.leerAlta = leer;
+		this.escribirAlta = escribir;
 		this.ventanaMenu = new VentanaMenu();
 		this.ventanaMenu.setActionListener(this);
 		this.torneo = Torneo.getInstance();
+		this.torneo.addObserver(this);
 		this.contadorEntrenadores = torneo.getCantidadEntrenadores();
-		this.agregaObservables();
 	}
 
 	@Override
@@ -43,7 +43,7 @@ public class Controlador implements ActionListener, Observer
 		if (comando.equalsIgnoreCase("INICIO"))
 		{
 			this.ventanaMenu.cerrarVentana();
-			this.ventanaInscripcion = new VentanaInscripcion();
+			this.ventanaInscripcion = new VentanaInscripcion(leerAlta);
 			this.ventanaInscripcion.setActionListener(this);
 		} else if (comando.equalsIgnoreCase("AGREGAR ENTRENADOR"))
 		{
@@ -53,18 +53,16 @@ public class Controlador implements ActionListener, Observer
 		{
 			this.agregaPokemon();
 			this.ventanaInscripcion.altaPokemon(--this.contadorPokemones, this.contadorEntrenadores);
-		} else if (comando.equalsIgnoreCase("SI ELEMENTO"))
-			this.ventanaInscripcion.habilitaElemento();
-		else if (comando.equalsIgnoreCase("NO ELEMENTO"))
-			this.ventanaInscripcion.deshabilitaElemento();
-		else if (comando.equalsIgnoreCase("INICIA TORNEO"))
+		} else if (comando.equalsIgnoreCase("INICIA TORNEO"))
 		{
+			if (escribirAlta)
+				torneo.getGestionPersistencia().escribeInformacion("Inscripcion.bin", torneo.getListaEntrenadores());
 			this.ventanaInscripcion.cerrarVentana();
 			this.ventanaArenas = new VentanaArena();
 			this.ventanaArenas.setActionListener(this);
 			this.torneo.iniciaTorneo();
 		}
-		this.ventanaInscripcion.actualizarListaEntrenador(this.torneo.getListaEntrenadores().iterator());
+		 this.ventanaInscripcion.actualizarListaEntrenador(this.torneo.getListaEntrenadores().iterator());
 	}
 
 	private void agregarEntrenador()
@@ -91,23 +89,27 @@ public class Controlador implements ActionListener, Observer
 
 	}
 
-	public void agregaObservables()
-	{
-		Iterator<Arena> it = this.torneo.getListaArenas().iterator();
-		while (it.hasNext())
-			it.next().addObserver(this);
-	}
-
 	@Override
-	public void update(Observable o, Object arg)
+	public void update(Observable observable, Object arg)
 	{
-		if (o != this.torneo)
-			throw new InvalidParameterException();
+		if ((Torneo) observable != torneo)
+			throw new IllegalArgumentException();
 		else
 		{
-
+			if (arg.toString().equalsIgnoreCase("INICIA TORNEO")) 
+				this.ventanaArenas.agregaLogSur("\n ---INICIO DEL TORNEO!!---\n");
+			else if (arg.toString().equalsIgnoreCase("COMIENZA RONDA"))
+				this.ventanaArenas.agregaLogSur("****RONDA"+torneo.getRondaActual()+"****\n");
+			else if (arg.toString().equalsIgnoreCase("FIN RONDA"))
+				this.ventanaArenas.agregaLogSur("\n ****FIN DE LA RONDA"+torneo.getRondaActual()+"****\n");
+			else if (arg.toString().equalsIgnoreCase("FIN TORNEO"))
+				this.ventanaArenas.agregaLogSur("\n ****Fin del torneo el ganador es: "+torneo.getGanador().getNombre()+"!!!****\n");
+			else if (arg.toString().equalsIgnoreCase("AVISO OESTE"))
+				this.ventanaArenas.agregaLogOeste(this.torneo.getMensajeArena());
+			else if (arg.toString().equalsIgnoreCase("AVISO ESTE"))
+				this.ventanaArenas.agregaLogEste(this.torneo.getMensajeArena());
+			else if (arg.toString().equalsIgnoreCase("AVISO CENTRAL"))
+				this.ventanaArenas.agregaLogCentral(this.torneo.getMensajeArena());
 		}
-
 	}
-
 }

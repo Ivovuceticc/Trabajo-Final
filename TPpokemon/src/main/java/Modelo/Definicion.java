@@ -35,6 +35,7 @@ public class Definicion implements IState
 		Entrenador ganador, perdedor;
 		double puntajeA, puntajeB;
 		Random r = new Random();
+		String mensaje;
 
 		puntajeA = pokemonA.vitalidad + pokemonA.escudo + pokemonA.fuerza;
 		puntajeB = pokemonB.vitalidad + pokemonB.escudo + pokemonB.fuerza;
@@ -54,28 +55,35 @@ public class Definicion implements IState
 			perdedor = entrenadorB;
 		}
 		
-		System.out.println("\nEl ganador de la batalla es: "+ ganador.getNombre());
+		mensaje = "\nEl ganador de la batalla es: "+ ganador.getNombre();
+		arena.notificaCambios(mensaje);
+		
 		this.arena.setGanador(ganador);
 		
 		ganador.setPuntosDeBatalla(ganador.getPuntosDeBatalla() + 200);
-		System.out.println("\nAhora podrás quedarte con uno de sus pokemones!! ademas de recibir puntos de batalla!");
+		//"\nAhora podrás quedarte con uno de sus pokemones!! ademas de recibir puntos de batalla!");
 		int tamaño = perdedor.getListaPokemones().size();
 		int numAleatorio = r.nextInt(tamaño);
 		Pokemon pokemon = perdedor.getListaPokemones().get(numAleatorio);
 		perdedor.getListaPokemones().remove(numAleatorio);
 		ganador.getListaPokemones().add(pokemon);
-		System.out.println("\nTe has quedado con "+ pokemon+" !!!! y has ganado 200 puntos de batalla !!");
+		mensaje = "\nEl ganador ha quedado con "+ pokemon+" !!!! y ha ganado 200 puntos de batalla !!\n";
+		arena.notificaCambios(mensaje);
+
 		
-		if(perdedor.actualizaCategoria())
-			System.out.println("\nLuego de la batalla "+ perdedor.getNombre() + " adquirió la categoria de "+ perdedor.getCategoria());
-		if(ganador.actualizaCategoria())
-			System.out.println("\nLuego de la batalla "+ ganador.getNombre() + " adquirió la categoria de "+ ganador.getCategoria());
-		
+		if(perdedor.actualizaCategoria()) 
+		{
+			mensaje = "\nLuego de la batalla "+ perdedor.getNombre() + " adquirió la categoria de "+ perdedor.getCategoria();
+			arena.notificaCambios(mensaje);
+		}	
+		if(ganador.actualizaCategoria()) {
+			mensaje = "\nLuego de la batalla "+ ganador.getNombre() + " adquirió la categoria de "+ ganador.getCategoria();
+			arena.notificaCambios(mensaje);
+	     }
 		
 		this.arena.setEstado(new Preliminar(arena));
 		this.arena.setOcupada(false);
 		this.arena.notifyAll();
-		
 	}
 	
 }

@@ -15,8 +15,6 @@ public interface IVistaInscripcion
 	String getTipoElemento();
 	void altaEntrenador();
 	void altaPokemon(int cont1, int cont2);
-	void habilitaElemento();
-	void deshabilitaElemento();
 	void actualizarListaEntrenador(Iterator<Entrenador> iterator);
 	void agregaLog(String lineaTexto);
 }

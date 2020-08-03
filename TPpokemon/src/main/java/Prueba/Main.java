@@ -68,7 +68,9 @@ public class Main
 		System.out.println("--------------------------------------------------------------");
 		
 		*/
-		Controlador controlador = new Controlador();
+		boolean leerInscripcion = true, escribirInscripcion = false;
+		
+		Controlador controlador = new Controlador(leerInscripcion, escribirInscripcion);
 		/*
 		//Ejemplo clonar un pokemon que si admita clonacion.
 		System.out.println("Zona clonacion pokemon\n");

@@ -1,14 +1,19 @@
 package Modelo;
 
 import java.util.Observable;
+import java.util.Observer;
 
 /**
- * @author Vucetic Ivo 
- * <br>
+ * @author Vucetic Ivo <br>
  *         Clase que representa una arena del torneo. La cual será el lugar
  *         donde se desate el enfrentamiento entre entrenadores. Contiene un
- *         nombre, el estado en el cual podria encontrarse, el entrenador que resulte victorioso y si se puede usar dicha arena.
- *         Esta clase podrá ser observada por otras.
+ *         nombre, el estado en el cual podria encontrarse, el entrenador que
+ *         resulte victorioso y si se puede usar dicha arena. Esta clase podrá
+ *         ser observada por otras.
+ */
+/**
+ * @author Acer
+ *
  */
 public class Arena extends Observable
 {
@@ -18,7 +23,9 @@ public class Arena extends Observable
 	private Entrenador ganador;
 
 	/**
-	 * Constructor con un parametro para setear el nombre de la arena. También se inicializa el estado inicial de la arena.<br>
+	 * Constructor con un parametro para setear el nombre de la arena. También se
+	 * inicializa el estado inicial de la arena.<br>
+	 * 
 	 * @param nombre: parámetro de tipo String que representa el nombre de la arena.
 	 */
 	public Arena(String nombre)
@@ -27,48 +34,70 @@ public class Arena extends Observable
 		this.estado = new Preliminar(this);
 	}
 
-	/**<br>
-	 * Este método será la puerta de entrada para que se pueda usar una arena del torneo. Se podrá ingresar solo si esta desocupada, caso contrario quien ingrese deberá esperar para su uso.<br>
-	 * <b>Pre: </b> El enfrentamiento debe ser distinto de null.<b>Pre: </b> 
-	 * <b>Pos: </b> Si la arena se encontraba desocupada el enfrentamiento se podrá disputar, caso contrario deberá aguardar hasta que se lo notifique.<b>Pre: </b> 
-	 * @param enfrentamiento: parámetro de tipo enfrentamiento que representa el par de entrenadores que quieren ingresar a dicha arena.
+	/**
+	 * <br>
+	 * Este método será la puerta de entrada para que se pueda usar una arena del
+	 * torneo. Se podrá ingresar solo si esta desocupada, caso contrario quien
+	 * ingrese deberá esperar para su uso.<br>
+	 * <b>Pre: </b> El enfrentamiento debe ser distinto de null.<b>Pre: </b> <b>Pos:
+	 * </b> Si la arena se encontraba desocupada el enfrentamiento se podrá
+	 * disputar, caso contrario deberá aguardar hasta que se lo notifique.<b>Pre:
+	 * </b>
+	 * 
+	 * @param enfrentamiento: parámetro de tipo enfrentamiento que representa el par
+	 *                        de entrenadores que quieren ingresar a dicha arena.
 	 */
 	public synchronized void ingresarArena(Enfrentamiento enfrentamiento)
 	{
+		String mensaje;
+
 		while (ocupada)
-		{	
+		{
 			try
-			{	
-				/*
-				System.out.println("\nUn enfrentamiento quiere ingresar a la arena " + this.getNombre()
-						+ "es el enfrentamiento " + enfrentamiento.toString());
-						
-				*/
-				this.setChanged();
-				this.notifyObservers(arg);
+			{
+				mensaje = " Un enfrentamiento quiere ingresar a la arena " + this.getNombre() + "es el enfrentamiento "
+						+ enfrentamiento.toString();
+				this.notificaCambios(mensaje);
+
 				wait();
+
 			} catch (InterruptedException e)
 			{
 				e.printStackTrace();
 			}
-			
+
 		}
+
 		this.ocupada = true;
-		//System.out.println("\nIngreso en la arena " + enfrentamiento.toString());
-		
 		notifyAll();
+		
+		mensaje = "Estado arena: Preliminar";
+		this.notificaCambios(mensaje);
+
+		mensaje = "Ingreso en la arena " + enfrentamiento.toString();
+		this.notificaCambios(mensaje);
+
 		this.presentarRivales(enfrentamiento.getEntrenador1(), enfrentamiento.getEntrenador2());
+		SimulaPausa.espera();
 		this.comenzarBatalla();
+		SimulaPausa.espera();
 		this.obtenerResultados();
 		enfrentamiento.setGanador(ganador);
 	}
+	
 
 	/**
-	 * Dependiendo del estado en el que se encuentre la arena, este método variará al querer presentar a los entrenadores junto con los pokemones que van a usar. Se informará con claridad en cada estado documentado de la arena <br>
+	 * Dependiendo del estado en el que se encuentre la arena, este método variará
+	 * al querer presentar a los entrenadores junto con los pokemones que van a
+	 * usar. Se informará con claridad en cada estado documentado de la arena <br>
 	 * <b>Pre: </b> Los entrenadores deben ser distinto de null.<br>
-	 * <b>Pos: </b> Dependiendo del estado de la arena se procederá a presentar a los entrenadores o informar que ya se a realizado.<br>
-	 * @param entrenador1: parámetro de tipo Entrenador que representa un entrenador.<br>
-	 * @param entrenador2: parámetro de tipo Entrenador que representa un entrenador.<br>
+	 * <b>Pos: </b> Dependiendo del estado de la arena se procederá a presentar a
+	 * los entrenadores o informar que ya se a realizado.<br>
+	 * 
+	 * @param entrenador1: parámetro de tipo Entrenador que representa un
+	 *                     entrenador.<br>
+	 * @param entrenador2: parámetro de tipo Entrenador que representa un
+	 *                     entrenador.<br>
 	 */
 	public void presentarRivales(Entrenador entrenador1, Entrenador entrenador2)
 	{
@@ -76,7 +105,9 @@ public class Arena extends Observable
 	}
 
 	/**
-	 * Dependiendo del estado en el que se encuentre la arena, este método variará al querer enfrentar a los entrenadores. Se informará con claridad en cada estado documentado de la arena <br>
+	 * Dependiendo del estado en el que se encuentre la arena, este método variará
+	 * al querer enfrentar a los entrenadores. Se informará con claridad en cada
+	 * estado documentado de la arena <br>
 	 */
 	public void comenzarBatalla()
 	{
@@ -84,7 +115,9 @@ public class Arena extends Observable
 	}
 
 	/**
-	 * Dependiendo del estado en el que se encuentre la arena, este método variará al querer obtener el resultado del enfrentamiento.Se informará con claridad en cada estado documentado de la arena <br>
+	 * Dependiendo del estado en el que se encuentre la arena, este método variará
+	 * al querer obtener el resultado del enfrentamiento.Se informará con claridad
+	 * en cada estado documentado de la arena <br>
 	 */
 	public void obtenerResultados()
 	{
@@ -116,4 +149,14 @@ public class Arena extends Observable
 		this.ganador = ganador;
 	}
 
+	public IState getEstado()
+	{
+		return estado;
+	}
+
+	public void notificaCambios(String mensaje)
+	{
+		this.setChanged();
+		this.notifyObservers(mensaje);
+	}
 }

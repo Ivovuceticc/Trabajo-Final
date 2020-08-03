@@ -1,12 +1,14 @@
 package Modelo;
 
+import java.io.Serializable;
+
 /**
  * @author Vucetic Ivo
  *Esta clase representa uno de los tres tipos de cartas que tienen cada entrenador, el tipo niebla.<br>
  *Dispone de una cantidad de cartas de este tipo y su correspondiente nombre.<br>
  *Tendrá la posibilidad de clonarse.
  */
-public class CartaNiebla implements ICarta, Cloneable
+public class CartaNiebla implements ICarta, Cloneable, Serializable
 {
 	private int cantidad;
 	private String Nombre;

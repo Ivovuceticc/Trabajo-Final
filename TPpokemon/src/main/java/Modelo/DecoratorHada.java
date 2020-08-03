@@ -2,6 +2,7 @@ package Modelo;
 
 public class DecoratorHada extends DecoratorPokemon
 {
+	private static final long serialVersionUID = 1L;
 	private boolean auraDeHada;
 
 	public DecoratorHada(Pokemon encapsulado)

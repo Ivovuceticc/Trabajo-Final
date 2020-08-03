@@ -1,5 +1,7 @@
 package Modelo;
 
+import java.io.Serializable;
+
 /**
  * @author Vucetic Ivo
  *Esta clase representa uno de los tres tipos de cartas que tienen cada entrenador, el tipo Viento.<br>
@@ -7,7 +9,7 @@ package Modelo;
  *Tendrá la posibilidad de clonarse.
  */
 
-public class CartaViento implements ICarta, Cloneable
+public class CartaViento implements ICarta, Cloneable, Serializable
 {	
 	protected int cantidad;
 	public String Nombre;

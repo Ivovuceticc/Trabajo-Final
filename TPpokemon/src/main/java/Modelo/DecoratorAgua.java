@@ -2,6 +2,7 @@ package Modelo;
 
 public class DecoratorAgua extends DecoratorPokemon
 {
+	private static final long serialVersionUID = 1L;
 	private boolean recargaAgua;
 	private boolean auraDeAgua;
 	
@@ -11,7 +12,7 @@ public class DecoratorAgua extends DecoratorPokemon
 		super(encapsulado);
 		this.fuerza = encapsulado.fuerza + 120;
 		this.escudo = encapsulado.escudo + 100;
-		this.vitalidad = encapsulado.vitalidad + 200;
+		this.vitalidad = encapsulado.vitalidad + 500;
 		this.recargaAgua = true;
 		this.auraDeAgua = true;
 	}

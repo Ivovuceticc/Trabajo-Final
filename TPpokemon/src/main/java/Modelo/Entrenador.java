@@ -1,9 +1,9 @@
 package Modelo;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
-import java.util.Scanner;
 
 /**
  * @author Vucetic Ivo<br>
@@ -13,13 +13,14 @@ import java.util.Scanner;
  *         de batalla que podrá usar para subir el poder de sus pokemones.
  *
  */
-public class Entrenador implements Cloneable, Clasificable
+public class Entrenador implements Cloneable, Clasificable, Serializable
 {
+	private static final long serialVersionUID = 1L;
 	private String nombre;
 	private ArrayList<Pokemon> listaPokemones;
-	private static final int cantidadPokemones = 3;
-	private static final int cantidadTipoCartas = 3;
-	private static final int numeroCartasParaUso = 3;
+	private final int cantidadPokemones = 3;
+	private final int cantidadTipoCartas = 3;
+	private final int numeroCartasParaUso = 3;
 	private ArrayList<ICarta> listaCartas;
 	private int numeroCartasUsadas = 0, puntosDeBatalla = 0;
 	private String categoria = "";
@@ -36,8 +37,8 @@ public class Entrenador implements Cloneable, Clasificable
 	public Entrenador(String nombre)
 	{
 		this.nombre = nombre;
-		this.listaPokemones = new ArrayList<Pokemon>(Entrenador.cantidadPokemones);
-		this.listaCartas = new ArrayList<ICarta>(Entrenador.cantidadTipoCartas);
+		this.listaPokemones = new ArrayList<Pokemon>(cantidadPokemones);
+		this.listaCartas = new ArrayList<ICarta>(cantidadTipoCartas);
 		this.listaCartas.add(new CartaNiebla());
 		this.listaCartas.add(new CartaViento());
 		this.listaCartas.add(new CartaTormenta());
@@ -136,7 +137,7 @@ public class Entrenador implements Cloneable, Clasificable
 		return this.categoria;
 	}
 
-	public static int getCantidadpokemones()
+	public int getCantidadpokemones()
 	{
 		return cantidadPokemones;
 	}

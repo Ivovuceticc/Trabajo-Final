@@ -1,7 +1,11 @@
 package Modelo;
 
-public abstract class Pokemon implements Hechizable, Clasificable, Cloneable
+import java.io.Serializable;
+import java.util.Observable;
+
+public abstract class Pokemon /*extends Observable*/ implements Hechizable, Clasificable, Cloneable, Serializable
 {
+	private static final long serialVersionUID = 1L;
 	protected String nombre;
 	protected double escudo, vitalidad, fuerza;
 	private double escudoMax, vitalidadMax, fuerzaMax;
@@ -27,11 +31,11 @@ public abstract class Pokemon implements Hechizable, Clasificable, Cloneable
 		this.experiencia = 0;
 	}
 
-	// Usar metodo template
+	
 	public void atacar(Pokemon adversario)
 	{
 		this.golpeInicial(adversario);
-		this.recarga(); // Hook
+		this.recarga(); 
 		this.golpeFinal(adversario);
 	}
 
@@ -42,8 +46,11 @@ public abstract class Pokemon implements Hechizable, Clasificable, Cloneable
 	}
 
 	protected void recarga()
-	{
-		System.out.println("\n "+this.nombre+ " No es posible que utilize la habilidad de recarga");
+	{	
+		String mensaje;
+		mensaje = "\n "+this.nombre+ " No es posible que utilize la habilidad de recarga\n";
+		//this.setChanged();
+		//this.notifyObservers(mensaje);
 	}
 
 	protected String getNombre()

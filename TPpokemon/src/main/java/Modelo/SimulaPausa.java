@@ -5,7 +5,7 @@ import java.util.Random;
 public class SimulaPausa
 {
 	private static Random r = new Random();
-	private static final int esperaMax = 2000;
+	private static final int esperaMax = 3000;
 	
 	public static void espera()
 	{	

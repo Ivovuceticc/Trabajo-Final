@@ -1,6 +1,6 @@
 package Modelo;
 
-public interface ICarta
+public interface ICarta 
 {
 	void hechizar(Hechizable hechizable);
 	void setCantidad(int cantidad);

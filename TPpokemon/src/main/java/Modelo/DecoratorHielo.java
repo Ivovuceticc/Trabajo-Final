@@ -2,6 +2,7 @@ package Modelo;
 
 public class DecoratorHielo extends DecoratorPokemon
 {
+	private static final long serialVersionUID = 1L;
 	private boolean granRecarga;
 	private boolean auraDeHielo;
 

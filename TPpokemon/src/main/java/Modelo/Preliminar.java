@@ -1,5 +1,6 @@
 package Modelo;
 
+
 import java.util.Random;
 
 /**
@@ -31,18 +32,22 @@ public class Preliminar implements IState
 	{
 		Pokemon pokemonA = null, pokemonB = null;
 		Random generador = new Random();
-
-		System.out.println("------ELECCION DE POKEMONES------\n");
-		
+		String mensaje;
+			
 		pokemonA = entrenadorA.eligePokemon();
 		
-		System.out.println("-----Entrenador: " + entrenadorA.getNombre() + " elige a "+ pokemonA + "-----\n");
+		mensaje ="-----Entrenador: " + entrenadorA.getNombre() + " elige a "+ pokemonA + "-----"; 
+		arena.notificaCambios(mensaje);
 		
 		pokemonB = entrenadorB.eligePokemon();
-		
-		System.out.println("-----Entrenador: " + entrenadorB.getNombre() + " elige a "+ pokemonB + "-----\n");
+
+		mensaje ="-----Entrenador: " + entrenadorB.getNombre() + " elige a "+ pokemonB + "-----"; 
+		arena.notificaCambios(mensaje);
 		
 		this.arena.setEstado(new Batalla(entrenadorA, entrenadorB, pokemonA, pokemonB, arena));
+		
+		mensaje = "\nEstado arena: Batalla\n";
+		arena.notificaCambios(mensaje);
 	}
 
 	/**

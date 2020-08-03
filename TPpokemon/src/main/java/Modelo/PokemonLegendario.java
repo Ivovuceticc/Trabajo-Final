@@ -2,7 +2,8 @@ package Modelo;
 
 public class PokemonLegendario extends Pokemon
 {
-	
+	private static final long serialVersionUID = 1L;
+
 	public PokemonLegendario(String nombre)
 	{
 		super(nombre, 200, 40, 50, 0); // Inicializo cualquier pokemon que sea de tipo legendario

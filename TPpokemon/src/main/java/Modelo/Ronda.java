@@ -5,17 +5,26 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.Random;
 
+import Persistencia.GestionPersistencia;
+
 /**
  * @author Vucetic Ivo Clase que representa una ronda, en dicha ronda se
  *         ejecutarán los enfrentamientos correspondientes a la cantidad de
  *         entrenadores que halla.
  */
-public class Ronda
+public class Ronda extends Observable implements Observer
 {
+	private ArrayList<Entrenador> listaGanadores;
+	private ArrayList<Observable> listaObservados;
+	private GestionPersistencia gestionPersistencia;
+	private int totalEnfrentamientos, numeroRonda;
 
-	public Ronda()
-	{
-
+	public Ronda(int numero)
+	{	
+		this.numeroRonda = numero;
+		this.listaGanadores = new ArrayList<Entrenador>();
+		this.gestionPersistencia = new GestionPersistencia();
+		this.listaObservados = new ArrayList<Observable>();
 	}
 
 	/**
@@ -27,20 +36,27 @@ public class Ronda
 	 * disponibles en el torneo, también de forma aleatoria. Luego se ejecutarán de
 	 * forma concurrente los enfrentamientos. Finalizados los enfrentamientos se
 	 * tomarán los ganadores de los mismos y se dará por terminada la ronda.<br>
-	 * <b>Pre:</b> La lista de entrenadoresRonda debe ser distinta de null y debe estar previamente inicilizada. De la misma manera debe estár la lista de las arenas.<br>
-	 * <b>Post:</b>Se devolverá una lista con los entrenadores victoriosos de la ronda.<br>
-	 * @param entrenadoresRonda: Parámetro de tipo ArrayList<Entrenador> que representa los entrenadores que participarán en la ronda.<br>
-	 * @param arenas: Parámetro de tipo ArrayList<Arena> que representa las arenas que se podrán utilizar en la ronda.<br>
-	 * @return ArrayList<Entrenador> con los entrenadores que ganaron cada enfrentamiento.<br>
+	 * <b>Pre:</b> La lista de entrenadoresRonda debe ser distinta de null y debe
+	 * estar previamente inicilizada. De la misma manera debe estár la lista de las
+	 * arenas.<br>
+	 * <b>Post:</b>Se devolverá una lista con los entrenadores victoriosos de la
+	 * ronda.<br>
+	 * 
+	 * @param entrenadoresRonda: Parámetro de tipo ArrayList<Entrenador> que
+	 *                           representa los entrenadores que participarán en la
+	 *                           ronda.<br>
+	 * @param arenas:            Parámetro de tipo ArrayList<Arena> que representa
+	 *                           las arenas que se podrán utilizar en la ronda.<br>
+	 * @return ArrayList<Entrenador> con los entrenadores que ganaron cada
+	 *         enfrentamiento.<br>
 	 */
-	public ArrayList<Entrenador> inicia(ArrayList<Entrenador> entrenadoresRonda, ArrayList<Arena> arenas)
+	public void inicia(ArrayList<Entrenador> entrenadoresRonda, ArrayList<Arena> arenas)
 	{
-		ArrayList<Entrenador> auxList = new ArrayList<Entrenador>();
 		Entrenador entrenadorA, entrenadorB;
 		Random generador = new Random();
-		int posRandom, cantidadEntrenadores = entrenadoresRonda.size(), numeroEnfrent = -1;
-		Enfrentamiento[] enfrentamientos = new Enfrentamiento[cantidadEntrenadores / 2];
+		int posRandom, numeroEnfrent = 0, cantidadEntrenadores = entrenadoresRonda.size();
 
+		this.totalEnfrentamientos = cantidadEntrenadores / 2;
 		while (cantidadEntrenadores > 0)
 		{
 			posRandom = generador.nextInt(cantidadEntrenadores);
@@ -49,27 +65,37 @@ public class Ronda
 			posRandom = generador.nextInt(cantidadEntrenadores - 1);
 			entrenadorB = entrenadoresRonda.get(posRandom);
 			entrenadoresRonda.remove(posRandom);
-			enfrentamientos[++numeroEnfrent] = new Enfrentamiento(entrenadorA, entrenadorB,
-					arenas.get(generador.nextInt(arenas.size())), numeroEnfrent);
+
+			Enfrentamiento enfrentamiento = new Enfrentamiento(entrenadorA, entrenadorB,
+					arenas.get(generador.nextInt(arenas.size())), ++numeroEnfrent);
+			enfrentamiento.addObserver(this);
+			this.listaObservados.add(enfrentamiento);
+
+			Thread hiloEnfrentamiento = new Thread(enfrentamiento);
+			hiloEnfrentamiento.start();
 
 			cantidadEntrenadores = entrenadoresRonda.size();
 		}
 
-		for (int i = 0; i <= numeroEnfrent; i++)
-			enfrentamientos[i].start();
+	}
 
-		try
+	@Override
+	public synchronized void update(Observable observable, Object arg)
+	{
+		if (!this.listaObservados.contains(observable))
+			throw new IllegalArgumentException();
+		else
 		{
-			Thread.sleep(SimulaPausa.getEsperamax());
-		} catch (InterruptedException e)
-		{
-			e.printStackTrace();
+			this.listaGanadores.add((Entrenador) arg);
+			if (--this.totalEnfrentamientos == 0)
+			{	
+				this.gestionPersistencia.escribeInformacion(Util.cambiaNombreArchivo("Ronda"+ ++numeroRonda), this.listaGanadores);
+				this.setChanged();
+				this.notifyObservers("FIN RONDA");
+			}
+
 		}
-
-		for (int j = 0; j <= numeroEnfrent; j++)
-			auxList.add(enfrentamientos[j].getGanador());
-
-		return auxList;
+		notifyAll();
 	}
 
 }

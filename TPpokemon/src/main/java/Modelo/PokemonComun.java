@@ -2,7 +2,8 @@ package Modelo;
 
 public class PokemonComun extends Pokemon
 {
-	
+	private static final long serialVersionUID = 1L;
+
 	public PokemonComun(String nombre)
 	{
 		super(nombre, 100, 20, 25, 0); // Inicializo cualquier pokemon que sea de tipo comun

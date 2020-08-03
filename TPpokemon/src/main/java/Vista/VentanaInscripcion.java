@@ -54,10 +54,6 @@ public class VentanaInscripcion extends JFrame implements IVistaInscripcion, Key
 	private JLabel lblNewLabel_2;
 	private JPanel panel_9;
 	private JTextField textTipo;
-	private JPanel panel_10;
-	private JLabel lblNewLabel_3;
-	private JRadioButton rdbtnSi;
-	private JRadioButton rdbtnNo;
 	private JPanel panel_11;
 	private JPanel panel_12;
 	private JLabel lblNewLabel_4;
@@ -75,11 +71,10 @@ public class VentanaInscripcion extends JFrame implements IVistaInscripcion, Key
 	private JScrollPane scrollPane_2;
 	private Recursos recursos = new Recursos();
 	private JButton btnIniciaTorneo;
-	private final ButtonGroup buttonGroup = new ButtonGroup();
 	private DefaultListModel<Entrenador> listModelEntrenador = new DefaultListModel<Entrenador>();
 	private JTextArea textAreapokemones;
 
-	public VentanaInscripcion()
+	public VentanaInscripcion(boolean leerAlta)
 	{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 600, 400);
@@ -119,6 +114,8 @@ public class VentanaInscripcion extends JFrame implements IVistaInscripcion, Key
 		this.panel_2.add(this.textFieldNombEntren);
 		this.textFieldNombEntren.setColumns(10);
 		this.textFieldNombEntren.addKeyListener(this);
+		this.textFieldNombEntren.setEnabled(!leerAlta);
+				
 
 		this.panel_3 = new JPanel();
 		this.panel_3.setOpaque(false);
@@ -170,28 +167,6 @@ public class VentanaInscripcion extends JFrame implements IVistaInscripcion, Key
 		this.panel_9.add(this.textTipo);
 		this.textTipo.addKeyListener(this);
 
-		this.panel_10 = new JPanel();
-		this.panel_10.setOpaque(false);
-		this.panelAlta.add(this.panel_10);
-
-		this.lblNewLabel_3 = new JLabel("Elemento");
-		this.lblNewLabel_3.setFont(new Font("Square721 BT", Font.BOLD, 12));
-		this.panel_10.add(this.lblNewLabel_3);
-
-		this.rdbtnSi = new JRadioButton("Si");
-		this.rdbtnSi.setActionCommand("SI ELEMENTO");
-		this.rdbtnSi.setEnabled(false);
-		buttonGroup.add(this.rdbtnSi);
-		this.rdbtnSi.setFont(new Font("Square721 BT", Font.BOLD, 12));
-		this.panel_10.add(this.rdbtnSi);
-
-		this.rdbtnNo = new JRadioButton("No");
-		this.rdbtnNo.setActionCommand("No ELEMENTO");
-		this.rdbtnNo.setEnabled(false);
-		buttonGroup.add(this.rdbtnNo);
-		this.rdbtnNo.setFont(new Font("Square721 BT", Font.BOLD, 12));
-		this.panel_10.add(this.rdbtnNo);
-
 		this.panel_11 = new JPanel();
 		this.panelAlta.add(this.panel_11);
 		this.panel_11.setLayout(new GridLayout(0, 2, 0, 0));
@@ -228,9 +203,10 @@ public class VentanaInscripcion extends JFrame implements IVistaInscripcion, Key
 
 		this.btnIniciaTorneo = new JButton("Inicio Torneo");
 		this.btnIniciaTorneo.setActionCommand("INICIA TORNEO");
-		this.btnIniciaTorneo.setEnabled(false);
 		this.btnIniciaTorneo.setFont(new Font("Square721 BT", Font.BOLD, 12));
 		this.panel_15.add(this.btnIniciaTorneo);
+		this.btnIniciaTorneo.setEnabled(leerAlta);
+			
 
 		this.panelAcciones = new JPanel();
 		this.panelAcciones.setOpaque(false);
@@ -291,8 +267,6 @@ public class VentanaInscripcion extends JFrame implements IVistaInscripcion, Key
 		this.btnAgregarEntrenador.addActionListener(actionListener);
 		this.btnAgregaPokemon.addActionListener(actionListener);
 		this.btnIniciaTorneo.addActionListener(actionListener);
-		this.rdbtnSi.addActionListener(actionListener);
-		this.rdbtnNo.addActionListener(actionListener);
 	}
 
 	@Override
@@ -318,14 +292,12 @@ public class VentanaInscripcion extends JFrame implements IVistaInscripcion, Key
 	{
 		return this.textTipo.getText();
 	}
-
+	
+	
 	@Override
 	public String getTipoElemento()
-	{
-		if (this.rdbtnSi.isSelected())
-			return this.textElemento.getText();
-		else
-			return "";
+	{	
+		return this.textElemento.getText();
 	}
 
 	@Override
@@ -373,8 +345,7 @@ public class VentanaInscripcion extends JFrame implements IVistaInscripcion, Key
 		this.btnAgregarEntrenador.setEnabled(false);
 		this.textNombrePokemon.setEnabled(true);
 		this.textTipo.setEnabled(true);
-		this.rdbtnSi.setEnabled(true);
-		this.rdbtnNo.setEnabled(true);
+		this.textElemento.setEnabled(true);
 	}
 
 	@Override
@@ -386,16 +357,12 @@ public class VentanaInscripcion extends JFrame implements IVistaInscripcion, Key
 			this.btnAgregarEntrenador.setEnabled(true);
 			this.textNombrePokemon.setEnabled(false);
 			this.textTipo.setEnabled(false);
-			this.rdbtnSi.setEnabled(false);
-			this.rdbtnNo.setEnabled(false);
 			this.textElemento.setEnabled(false);
 			this.btnAgregaPokemon.setEnabled(false);
 		} else if (contP <= 0 && contE == 0)
 		{
 			this.textNombrePokemon.setEnabled(false);
 			this.textTipo.setEnabled(false);
-			this.rdbtnSi.setEnabled(false);
-			this.rdbtnNo.setEnabled(false);
 			this.textElemento.setEnabled(false);
 			this.btnIniciaTorneo.setEnabled(true);
 			this.btnAgregaPokemon.setEnabled(false);
@@ -404,19 +371,6 @@ public class VentanaInscripcion extends JFrame implements IVistaInscripcion, Key
 		this.textTipo.setText("");
 		this.textElemento.setText("");
 
-	}
-
-	@Override
-	public void habilitaElemento()
-	{
-		this.textElemento.setEnabled(true);
-	}
-
-	@Override
-	public void deshabilitaElemento()
-	{
-		this.textElemento.setText("");
-		this.textElemento.setEnabled(false);
 	}
 
 	@Override

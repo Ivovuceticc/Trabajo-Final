@@ -1,12 +1,14 @@
 package Modelo;
 
+import java.util.Observable;
+
 /**
  * @author Vucetic Ivo
  * <br>
  *Clase que representa un enfrentamiento, por lo tanto contiene a dos entrenadores, la arena en la cual van a batallar, el numero del enfrentamiento
  *ya que se van a dar varios durante la ronda y cual sera el ganador de dicho enfrentamiento.  
  */
-public class Enfrentamiento extends Thread
+public class Enfrentamiento extends Observable implements Runnable
 {
 	private Entrenador entrenador1, entrenador2, ganador;
 	private Arena arena;
@@ -32,10 +34,12 @@ public class Enfrentamiento extends Thread
 	 */
 	@Override
 	public void run()
-	{
-		arena.ingresarArena(this);
+	{	
 		SimulaPausa.espera();
-		System.out.println("\nFinaliza el enfrentamiento "+ this.numeroEnfrentamiento);
+		arena.ingresarArena(this);
+		this.setChanged();
+		this.notifyObservers(ganador);
+		//System.out.println("\nFinaliza el enfrentamiento "+ this.numeroEnfrentamiento);
 	}
 
 	@Override
