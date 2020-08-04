@@ -7,11 +7,15 @@ import java.util.Observer;
 import Persistencia.GestionPersistencia;
 
 /**
- * @author Vucetic Ivo
- * <br>
- * Clase que representa un torneo de entrenadores pokemon, esta formado por dos ArrayList, una de los entrenadores que van a participar y 
- * otra con las arenas que se van a poder utilizar en el torneo. También por dos constantes que determinarán la cantidad de entrenadores y arenas que habrá,
- * una variable de instancia static que determina una única instancia del torneo y una variable de instancia de tipo Ronda que determina la ronda actual en la que estarán los entrenadores.
+ * @author Vucetic Ivo <br>
+ *         Clase que representa un torneo de entrenadores pokemon, esta formado
+ *         por dos ArrayList, una de los entrenadores que van a participar y
+ *         otra con las arenas que se van a poder utilizar en el torneo. También
+ *         por dos constantes que determinarán la cantidad de entrenadores y
+ *         arenas que habrá, una variable de instancia static que determina una
+ *         única instancia del torneo. Cuenta tambien con una lista de los
+ *         objetos que tendra que observar el torneo y una variable que se
+ *         encargará de realizar la persistencia en el programa.
  * 
  */
 
@@ -34,8 +38,8 @@ public class Torneo extends Observable implements Observer
 	 * <br>
 	 * Constructor sin parámetros que va a inicializar la cantidad de entrenadores
 	 * que habrá en el torneo, cantidad de arenas, lista de entrenadores, lista de
-	 * arenas, creará una instancia de la ronda y de las arenas que va a tener el
-	 * torneo.
+	 * arenas, lista de observados,las arenas que va a tener el torneo y el
+	 * persistidor.
 	 */
 	private Torneo()
 	{
@@ -53,10 +57,11 @@ public class Torneo extends Observable implements Observer
 
 	/**
 	 * <br>
-	 * Agrega una arena a la lista de arenas del torneo e incluye al torneo como un
-	 * nuevo observador. <b>Pre:</b> arena debe ser distinto de null y debe estar
-	 * previamente inicializada la lista. <b>Post:</b> Se agrega una nueva arena a
-	 * la lista.
+	 * Agrega una arena a la lista de arenas del torneo y a la lista de los
+	 * observados e incluye al torneo como un nuevo observador. <b>Pre:</b> arena
+	 * debe ser distinto de null y debe estar previamente inicializada la lista.
+	 * <b>Post:</b> Se agrega una nueva arena a la lista y se suma a la lista de
+	 * observados por el torneo.
 	 * 
 	 * @param arena: parámetro de tipo Arena que representa una nueva arena.
 	 */
@@ -151,9 +156,11 @@ public class Torneo extends Observable implements Observer
 	}
 
 	/**
-	 * Este método será el encargado de lanzar el torneo. Utilizando la lista de los
-	 * entrenadores se actualizará a medida que pasen las rondas, quedándose con el
-	 * ganador el torneo.
+	 * Este método será el encargado de lanzar el torneo. Lo primero que hará es
+	 * tomar la información contenida en el archivo Inscripcion para luego poder
+	 * iniciar la ronda correspondiente. Se notificarán los cambios a los
+	 * observadores correspondientes del torneo. <b>Pos:</b> Una vez que tengo la
+	 * información necesaria se llamará para crear la ronda.
 	 */
 	public void iniciaTorneo()
 	{
@@ -171,6 +178,16 @@ public class Torneo extends Observable implements Observer
 		// listaEntrenadores.get(0).toString() + "********");
 	}
 
+	/**
+	 * Se encargá de crear la ronda y poder enviarle lo necesario para que pueda
+	 * ejecutarse, se enviará la lista de los entrenadores que quedan en el torneo
+	 * junto con las arenas disponibles. También se encargará de agregar como
+	 * observador de la ronda al torneo y se agregará a la lista de observados del
+	 * torneo.
+	 * 
+	 * <b>Pos:</b> Se crea la ronda y se inicia.
+	 * 
+	 */
 	public void comienzaRonda()
 	{
 		Ronda ronda = new Ronda(this.rondaActual);
@@ -181,6 +198,10 @@ public class Torneo extends Observable implements Observer
 		ronda.inicia(this.listaEntrenadoresActual, this.listaArenas);
 	}
 
+	/**
+	 * Dependiendo de la cantidad de entrenadores en el torneo se decide si se
+	 * comienda una nueva ronda del torneo o si se llega al ganador del mismo.
+	 */
 	public void iniciaJornada()
 	{
 		this.listaEntrenadoresActual = this.gestionPersistencia

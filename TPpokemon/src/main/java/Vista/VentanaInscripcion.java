@@ -30,6 +30,11 @@ import javax.swing.event.ListSelectionListener;
 import Modelo.Entrenador;
 import Modelo.Pokemon;
 
+/**
+ * @author Vucetic Ivo Clase que representa la vista de la inscripción para el
+ *         torneo.<br>
+ *
+ */
 public class VentanaInscripcion extends JFrame implements IVistaInscripcion, KeyListener, ListSelectionListener
 {
 	private PanelConImagen contentPane;
@@ -74,6 +79,13 @@ public class VentanaInscripcion extends JFrame implements IVistaInscripcion, Key
 	private DefaultListModel<Entrenador> listModelEntrenador = new DefaultListModel<Entrenador>();
 	private JTextArea textAreapokemones;
 
+	/**
+	 * Constructor de la ventana, creara los paneles junto con los botones
+	 * correspondientes.<br>
+	 * 
+	 * @param leerAlta: Parámetro de tipo booleano para indicar si se quiere leer
+	 *                  inicialmente de un archivo. <br>
+	 */
 	public VentanaInscripcion(boolean leerAlta)
 	{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -85,6 +97,7 @@ public class VentanaInscripcion extends JFrame implements IVistaInscripcion, Key
 		this.contentPane.setFondo(recursos.getFndVentanaInsV1());
 		setContentPane(this.contentPane);
 
+		// Panel para hacer el alta de los entrenadores y pokemones.
 		this.panelAlta = new JPanel();
 		this.panelAlta.setOpaque(false);
 		this.panelAlta.setBackground(Color.GRAY);
@@ -115,12 +128,12 @@ public class VentanaInscripcion extends JFrame implements IVistaInscripcion, Key
 		this.textFieldNombEntren.setColumns(10);
 		this.textFieldNombEntren.addKeyListener(this);
 		this.textFieldNombEntren.setEnabled(!leerAlta);
-				
 
 		this.panel_3 = new JPanel();
 		this.panel_3.setOpaque(false);
 		this.panelAlta.add(this.panel_3);
 
+		// Boton para agregar entrenador.
 		this.btnAgregarEntrenador = new JButton("Agregar");
 		this.btnAgregarEntrenador.setEnabled(false);
 		this.btnAgregarEntrenador.setActionCommand("AGREGAR ENTRENADOR");
@@ -191,6 +204,7 @@ public class VentanaInscripcion extends JFrame implements IVistaInscripcion, Key
 		this.panel_14.setOpaque(false);
 		this.panelAlta.add(this.panel_14);
 
+		// Boton para agregar pokemon.
 		this.btnAgregaPokemon = new JButton("Agregar");
 		this.btnAgregaPokemon.setActionCommand("AGREGAR POKEMON");
 		this.btnAgregaPokemon.setEnabled(false);
@@ -206,8 +220,8 @@ public class VentanaInscripcion extends JFrame implements IVistaInscripcion, Key
 		this.btnIniciaTorneo.setFont(new Font("Square721 BT", Font.BOLD, 12));
 		this.panel_15.add(this.btnIniciaTorneo);
 		this.btnIniciaTorneo.setEnabled(leerAlta);
-			
 
+		// Panel en el que nos mostrará los cambios que se realizen en la ventana.
 		this.panelAcciones = new JPanel();
 		this.panelAcciones.setOpaque(false);
 		this.panelAcciones.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
@@ -249,7 +263,7 @@ public class VentanaInscripcion extends JFrame implements IVistaInscripcion, Key
 
 		this.scrollPane_2 = new JScrollPane();
 		this.panelPokemones.add(this.scrollPane_2, BorderLayout.CENTER);
-		
+
 		this.textAreapokemones = new JTextArea();
 		this.scrollPane_2.setViewportView(this.textAreapokemones);
 
@@ -292,11 +306,10 @@ public class VentanaInscripcion extends JFrame implements IVistaInscripcion, Key
 	{
 		return this.textTipo.getText();
 	}
-	
-	
+
 	@Override
 	public String getTipoElemento()
-	{	
+	{
 		return this.textElemento.getText();
 	}
 
@@ -305,6 +318,13 @@ public class VentanaInscripcion extends JFrame implements IVistaInscripcion, Key
 	{
 	}
 
+	/**
+	 * Dependiendo de los parámetros que se ingresen se habilitara o no el boton
+	 * para poder agregar al pokemon. No hay ninguna restriccion para con el nombre,
+	 * si para con el tipo que debe ser comun o legendario y el tipo elemento debe
+	 * ser hada,roca,fuego,agua o hielo.
+	 * 
+	 */
 	@Override
 	public void keyReleased(KeyEvent arg0)
 	{
@@ -327,7 +347,7 @@ public class VentanaInscripcion extends JFrame implements IVistaInscripcion, Key
 			condicion2 = elemento.equalsIgnoreCase("hada") || elemento.equalsIgnoreCase("hielo")
 					|| elemento.equalsIgnoreCase("agua") || elemento.equalsIgnoreCase("fuego")
 					|| elemento.equalsIgnoreCase("roca") || elemento.equals("");
-			
+
 			this.btnAgregaPokemon.setEnabled(!nombre.equals("") && condicion1 && condicion2);
 		}
 	}
@@ -348,6 +368,15 @@ public class VentanaInscripcion extends JFrame implements IVistaInscripcion, Key
 		this.textElemento.setEnabled(true);
 	}
 
+	/**
+	 * Si ya se agregaron todos los pokemones para un entrenador y todavia tengo
+	 * entrenadores para ingresar al torneo se me habilita la posibilidad de agregar
+	 * mas entrenadores y se bloquea la de ingresar pokemones. En cambio si ya
+	 * ingrese todos los pokemones para ese entrenador y llegue a la cantidad maxima
+	 * para el torneo, se desabilitara todo el panel, pero se habilita la
+	 * posibilidad de iniciar el torneo.
+	 * 
+	 */
 	@Override
 	public void altaPokemon(int contP, int contE)
 	{
@@ -366,23 +395,32 @@ public class VentanaInscripcion extends JFrame implements IVistaInscripcion, Key
 			this.textElemento.setEnabled(false);
 			this.btnIniciaTorneo.setEnabled(true);
 			this.btnAgregaPokemon.setEnabled(false);
-		} 
+		}
 		this.textNombrePokemon.setText("");
 		this.textTipo.setText("");
 		this.textElemento.setText("");
 
 	}
 
+	/**
+	 * Dependiendo del entrenador que seleccione en la lista dada en la ventana, me
+	 * mostrará los pokemones que tiene el entrenador en el detalle de los pokemones
+	 * dispuesto en la vista.
+	 */
 	@Override
 	public void valueChanged(ListSelectionEvent arg0)
 	{
-		Entrenador p = (Entrenador)this.listEntrenadores.getSelectedValue();
+		Entrenador p = (Entrenador) this.listEntrenadores.getSelectedValue();
 		if (p != null)
 		{
 			this.textAreapokemones.setText(p.detallePokemones());
 		}
 	}
 
+	/**
+	 * Se encarga de actualizar la lista de los entrenadores y se vuelve a dibujar
+	 * la pantalla para mostrar los cambios.
+	 */
 	@Override
 	public void actualizarListaEntrenador(Iterator<Entrenador> iterator)
 	{

@@ -1,8 +1,20 @@
 package Modelo;
 
 
+/**
+ * @author Vucetic Ivo
+ * La clase representa la forma en que se creará un objeto de tipo pokemon. 
+ */
 public class PokemonFactory
 {
+	/**
+	 * Este método se encarga de crear un nuevo pokemon, dado el nombre, el tipo y su elemento.
+	 * <b>Pre:</b> nombre,tipo y elemento != null.
+	 * @param nombre: Parámetro de tipo String que representa el nombre de un pokemon.
+	 * @param tipo: Parámetro de tipo String que representa el tipo del comun que será comun o legendario.
+	 * @param elemento: Parámetro de tipo String que representa el elemento del pokemon, ya sea hada,fuego,agua,hielo o roca.
+	 * @return Un nuevo pokemon.
+	 */
 	public static Pokemon getPokemon(String nombre, String tipo, String elemento)
 	{
 		Pokemon encapsulado = null;

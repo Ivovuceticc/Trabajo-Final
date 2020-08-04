@@ -1,6 +1,5 @@
 package Modelo;
 
-import java.util.Observer;
 import java.util.Random;
 
 /**
@@ -169,17 +168,4 @@ public class Batalla implements IState
 		throw new IllegalStateException("No se pueden obtener los resultados hasta que se enfrenten!!");
 	}
 	
-	/*
-	@Override
-	public void update(Observable arg0, Object arg1)
-	{
-		if ((Pokemon) arg0 == this.pokemonA || (Pokemon) arg0 == this.pokemonB)
-		{
-			this.setChanged();
-			this.notifyObservers((String)arg1);
-		}
-		else
-			throw new IllegalArgumentException();
-	}
-	*/
 }

@@ -10,6 +10,7 @@ import java.io.Serializable;
  */
 public class CartaNiebla implements ICarta, Cloneable, Serializable
 {
+	private static final long serialVersionUID = 1L;
 	private int cantidad;
 	private String Nombre;
 

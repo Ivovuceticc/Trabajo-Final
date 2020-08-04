@@ -10,7 +10,10 @@ import Persistencia.GestionPersistencia;
 /**
  * @author Vucetic Ivo Clase que representa una ronda, en dicha ronda se
  *         ejecutarán los enfrentamientos correspondientes a la cantidad de
- *         entrenadores que halla.
+ *         entrenadores que halla. Dispone de una lista que contiene los
+ *         ganadores de cada enfrentamientos, los observados por la ronda, el
+ *         persistidor y una variable que verifica la cantidad de
+ *         enfrentamientos que ya se realizaron
  */
 public class Ronda extends Observable implements Observer
 {
@@ -20,7 +23,7 @@ public class Ronda extends Observable implements Observer
 	private int totalEnfrentamientos, numeroRonda;
 
 	public Ronda(int numero)
-	{	
+	{
 		this.numeroRonda = numero;
 		this.listaGanadores = new ArrayList<Entrenador>();
 		this.gestionPersistencia = new GestionPersistencia();
@@ -34,21 +37,19 @@ public class Ronda extends Observable implements Observer
 	 * agrupando a los entrenadores de dos en dos de forma aleatoria hasta que todos
 	 * queden con un rival. Dichos enfrentamientos podrán utilizar una de las arenas
 	 * disponibles en el torneo, también de forma aleatoria. Luego se ejecutarán de
-	 * forma concurrente los enfrentamientos. Finalizados los enfrentamientos se
-	 * tomarán los ganadores de los mismos y se dará por terminada la ronda.<br>
+	 * forma concurrente los enfrentamientos.<br>
 	 * <b>Pre:</b> La lista de entrenadoresRonda debe ser distinta de null y debe
 	 * estar previamente inicilizada. De la misma manera debe estár la lista de las
 	 * arenas.<br>
-	 * <b>Post:</b>Se devolverá una lista con los entrenadores victoriosos de la
-	 * ronda.<br>
+	 * <b>Post:</b>Se ejecutarán los hilos correspondientes a los todos
+	 * enfrentamientos que se den en la ronda.<br>
 	 * 
 	 * @param entrenadoresRonda: Parámetro de tipo ArrayList<Entrenador> que
 	 *                           representa los entrenadores que participarán en la
 	 *                           ronda.<br>
 	 * @param arenas:            Parámetro de tipo ArrayList<Arena> que representa
 	 *                           las arenas que se podrán utilizar en la ronda.<br>
-	 * @return ArrayList<Entrenador> con los entrenadores que ganaron cada
-	 *         enfrentamiento.<br>
+	 *
 	 */
 	public void inicia(ArrayList<Entrenador> entrenadoresRonda, ArrayList<Arena> arenas)
 	{
@@ -79,6 +80,11 @@ public class Ronda extends Observable implements Observer
 
 	}
 
+	/**
+	 * Se encarga de actualizar la lista de ganadores cuando se termine el
+	 * enfrentamiento, y cuando ya no queden se va a persistir dicha lista de
+	 * ganadores.
+	 */
 	@Override
 	public synchronized void update(Observable observable, Object arg)
 	{
@@ -88,8 +94,9 @@ public class Ronda extends Observable implements Observer
 		{
 			this.listaGanadores.add((Entrenador) arg);
 			if (--this.totalEnfrentamientos == 0)
-			{	
-				this.gestionPersistencia.escribeInformacion(Util.cambiaNombreArchivo("Ronda"+ ++numeroRonda), this.listaGanadores);
+			{
+				this.gestionPersistencia.escribeInformacion(Util.cambiaNombreArchivo("Ronda" + ++numeroRonda),
+						this.listaGanadores);
 				this.setChanged();
 				this.notifyObservers("FIN RONDA");
 			}

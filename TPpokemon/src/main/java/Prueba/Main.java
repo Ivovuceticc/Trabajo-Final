@@ -12,7 +12,8 @@ public class Main
 	public static void main(String[] args)
 	{	
 		/*
-		Torneo torneo = Torneo.getInstance();
+		
+		//Datos para poder hacer alguna carga de escritura.
 		
 		Entrenador entrenador1 = new Entrenador("Lucas");
 		Entrenador entrenador2 = new Entrenador("Lucia");
@@ -51,28 +52,14 @@ public class Main
 		entrenador7.agregaPokemon(PokemonFactory.getPokemon("Rhydon", "Comun", "Roca"));
 		entrenador7.agregaPokemon(PokemonFactory.getPokemon("Haunter", "Comun", null));
 		entrenador7.agregaPokemon(PokemonFactory.getPokemon("Hitmontop", "Legendario", "Fuego"));
-		
-		torneo.agregaEntrenador(entrenador1);
-		torneo.agregaEntrenador(entrenador2);
-		torneo.agregaEntrenador(entrenador3);
-		torneo.agregaEntrenador(entrenador4);
-		torneo.agregaEntrenador(entrenador5);
-		torneo.agregaEntrenador(entrenador6);
-		torneo.agregaEntrenador(entrenador7);
-		torneo.agregaEntrenador(entrenador7);
-		
-		
-		
-		System.out.println("--------------------------------------------------------------");
-		System.out.println("------BIENVENIDOS AL TORNEO POKEMON DE "+ torneo.getNombre());
-		System.out.println("--------------------------------------------------------------");
-		
+			
 		*/
 		boolean leerInscripcion = true, escribirInscripcion = false;
 		
 		Controlador controlador = new Controlador(leerInscripcion, escribirInscripcion);
 		/*
 		//Ejemplo clonar un pokemon que si admita clonacion.
+		 *  
 		System.out.println("Zona clonacion pokemon\n");
 		System.out.println("\n1-Ejemplo de que se clonan correctamente los que admiten clonacion\n");
 		
@@ -113,50 +100,6 @@ public class Main
 			e.printStackTrace();
 		}
 			
-		//Ejemplo de clonacion para entrenadores, caso en que no se pueda clonar.
-		
-		System.out.println("\nZona clonacion entrenador\n");
-		System.out.println("1-Ejemplo de un entrenador que se puede clonar\n");
-		
-		
-		Entrenador entrenador1 = new Entrenador("Lucia");
-		
-		entrenador1.agregaPokemon(PokemonFactory.getPokemon("Starmie", "Comun", "Roca"));
-		entrenador1.agregaPokemon(PokemonFactory.getPokemon("Roselia", "Comun", "Fuego"));
-		entrenador1.agregaPokemon(PokemonFactory.getPokemon("Pupitar", "Comun", "Hada"));
-		
-		Entrenador entrenadorClon = null;
-		
-		try
-		{
-			entrenadorClon = (Entrenador)entrenador1.clone();
-		} catch (CloneNotSupportedException e)
-		{
-			e.printStackTrace();
-		} 
-		
-		int tamaño = entrenador1.getListaPokemones().size();
-		for(int i=0; i < tamano; i++)
-		
-		
-		
-		
-		Entrenador entrenador1 = new Entrenador("Lucas"); 
-		
-		entrenador1.agregaPokemon(PokemonFactory.getPokemon("Metagross", "Comun", "Hielo"));
-		entrenador1.agregaPokemon(PokemonFactory.getPokemon("Gendar", "Comun", "Agua"));
-		entrenador1.agregaPokemon(PokemonFactory.getPokemon("Golem", "Legendario", "Roca"));
-		
-		Entrenador entrenadorClon = null;
-		
-		try
-		{
-			entrenadorClon = (Entrenador) entrenador1.clone();
-		} catch (CloneNotSupportedException e)
-		{
-			e.printStackTrace();
-		}
-		
 	*/
 	}
 	

@@ -3,7 +3,7 @@ package Modelo;
 import java.io.Serializable;
 import java.util.Observable;
 
-public abstract class Pokemon /*extends Observable*/ implements Hechizable, Clasificable, Cloneable, Serializable
+public abstract class Pokemon implements Hechizable, Clasificable, Cloneable, Serializable
 {
 	private static final long serialVersionUID = 1L;
 	protected String nombre;

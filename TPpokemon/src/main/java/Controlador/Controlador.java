@@ -16,6 +16,14 @@ import Vista.VentanaArena;
 import Vista.VentanaInscripcion;
 import Vista.VentanaMenu;
 
+/**
+ * @author Vucetic Ivo Clase que representa al controlador que será el encargado
+ *         de manejar la funcionalida del programa. Cuenta con las referencias a
+ *         cada una de las vistas del programa, Menu, Inscripcion y Arenas.
+ *         Tambien cuanta con la referencia al modelo por medio de la clase
+ *         Torneo.
+ *
+ */
 public class Controlador implements ActionListener, Observer
 {
 	private IVistamenu ventanaMenu;
@@ -25,6 +33,15 @@ public class Controlador implements ActionListener, Observer
 	private int contadorPokemones, contadorEntrenadores;
 	private boolean leerAlta, escribirAlta;
 
+	/**
+	 * Constructor para inicializar las instancias de las vistas, modelo, variables
+	 * como leer y escribir que van a servir para la persistencia del programa.<br>
+	 * 
+	 * <b>Pre:</b> Ambas entradas deben ser !null.<br>
+	 * 
+	 * @param leer: Parámetro de tipo Boolean que representa la posibilidad de leer un archivo.<br>
+	 * @param escribir: Parámetro de tipo Boolean que representa la posibilidad de escribir en un archivo.<br>
+	 */
 	public Controlador(boolean leer, boolean escribir)
 	{
 		this.leerAlta = leer;
@@ -36,6 +53,9 @@ public class Controlador implements ActionListener, Observer
 		this.contadorEntrenadores = torneo.getCantidadEntrenadores();
 	}
 
+	/**
+	 *Se encarga de escuchar los eventos realizados en cada una de las interfaces.<br>
+	 */
 	@Override
 	public void actionPerformed(ActionEvent evento)
 	{
@@ -62,9 +82,13 @@ public class Controlador implements ActionListener, Observer
 			this.ventanaArenas.setActionListener(this);
 			this.torneo.iniciaTorneo();
 		}
-		 this.ventanaInscripcion.actualizarListaEntrenador(this.torneo.getListaEntrenadores().iterator());
+		this.ventanaInscripcion.actualizarListaEntrenador(this.torneo.getListaEntrenadores().iterator());
 	}
 
+	/**
+	 * Se encarga de agregar el entrenador correspondiente al torneo y luego muestra el cambio por la vista de Inscripción.<br>
+	 * <b>Pos:</b> Se agrega entrenador al torneo.<br>
+ 	 */
 	private void agregarEntrenador()
 	{
 		String nombre = ventanaInscripcion.getNombreEntrenador();
@@ -75,6 +99,10 @@ public class Controlador implements ActionListener, Observer
 		this.contadorEntrenadores--;
 	}
 
+	/**
+	 * Se encarga de agregar al pokemon correspondiente al torneo y luego muestra el cambio por la vista de Inscripción.<br>
+	 * <b>Pos:</b> Se agrega pokemon al torneo.
+	 */
 	private void agregaPokemon()
 	{
 		String nombrePokemon = this.ventanaInscripcion.getNombrePokemon();
@@ -89,6 +117,11 @@ public class Controlador implements ActionListener, Observer
 
 	}
 
+	/**
+	 *Este método me informará los cambios que sucedan en el modelo para luego informalo a las correspondientes vistas. 
+	 *<b>Pos:</b> Se envia el mensaje dado por arg a la vista correspondiente.
+	 *@throws IllegalArgumentException(): En el caso de que el observable no sea el torneo.
+	 */
 	@Override
 	public void update(Observable observable, Object arg)
 	{
@@ -96,14 +129,15 @@ public class Controlador implements ActionListener, Observer
 			throw new IllegalArgumentException();
 		else
 		{
-			if (arg.toString().equalsIgnoreCase("INICIA TORNEO")) 
+			if (arg.toString().equalsIgnoreCase("INICIA TORNEO"))
 				this.ventanaArenas.agregaLogSur("\n ---INICIO DEL TORNEO!!---\n");
 			else if (arg.toString().equalsIgnoreCase("COMIENZA RONDA"))
-				this.ventanaArenas.agregaLogSur("****RONDA"+torneo.getRondaActual()+"****\n");
+				this.ventanaArenas.agregaLogSur("****RONDA" + torneo.getRondaActual() + "****\n");
 			else if (arg.toString().equalsIgnoreCase("FIN RONDA"))
-				this.ventanaArenas.agregaLogSur("\n ****FIN DE LA RONDA"+torneo.getRondaActual()+"****\n");
+				this.ventanaArenas.agregaLogSur("\n ****FIN DE LA RONDA" + torneo.getRondaActual() + "****\n");
 			else if (arg.toString().equalsIgnoreCase("FIN TORNEO"))
-				this.ventanaArenas.agregaLogSur("\n ****Fin del torneo el ganador es: "+torneo.getGanador().getNombre()+"!!!****\n");
+				this.ventanaArenas.agregaLogSur(
+						"\n ****Fin del torneo el ganador es: " + torneo.getGanador().getNombre() + "!!!****\n");
 			else if (arg.toString().equalsIgnoreCase("AVISO OESTE"))
 				this.ventanaArenas.agregaLogOeste(this.torneo.getMensajeArena());
 			else if (arg.toString().equalsIgnoreCase("AVISO ESTE"))

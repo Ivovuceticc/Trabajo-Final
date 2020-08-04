@@ -10,6 +10,7 @@ import java.io.Serializable;
  */
 public class CartaTormenta implements ICarta, Cloneable, Serializable
 {
+	private static final long serialVersionUID = 1L;
 	protected int cantidad;
 	public String Nombre;
 	

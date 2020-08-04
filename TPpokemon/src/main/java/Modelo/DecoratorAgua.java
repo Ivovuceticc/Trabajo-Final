@@ -1,12 +1,23 @@
 package Modelo;
 
+/**
+ * @author Vucetic Ivo Clase que se encarga de sumar funcionalidad de tipo agua
+ *         a un objeto de tipo pokemon.
+ */
 public class DecoratorAgua extends DecoratorPokemon
 {
 	private static final long serialVersionUID = 1L;
 	private boolean recargaAgua;
 	private boolean auraDeAgua;
-	
 
+	/**
+	 * Constructor del tipo decorador de agua, se encarga de setear los parametros
+	 * de fuerza, escudo y vitalidad sumandole 120, 100 y 500 a los parametros del encapsulado. <b>pre:</b>
+	 * encapsulado != null.
+	 * 
+	 * @param encapsulado: Parámetro de tipo pokemon que representa al pokemon que
+	 *                     se le dará mas funcionalidad.
+	 */
 	public DecoratorAgua(Pokemon encapsulado)
 	{
 		super(encapsulado);
@@ -26,10 +37,10 @@ public class DecoratorAgua extends DecoratorPokemon
 
 	@Override
 	protected void recibeDano(double dano)
-	{	
-		if(auraDeAgua)
+	{
+		if (auraDeAgua)
 			this.escudo *= 1.1;
-		
+
 		if (dano < this.escudo)
 			this.escudo -= dano;
 		else
@@ -37,10 +48,10 @@ public class DecoratorAgua extends DecoratorPokemon
 			if (dano < (this.escudo + this.vitalidad))
 				this.vitalidad -= dano - this.escudo;
 			else
-				this.vitalidad = 0;					
+				this.vitalidad = 0;
 			this.escudo = 0;
 		}
-		
+
 	}
 
 	protected void recarga()
@@ -49,14 +60,13 @@ public class DecoratorAgua extends DecoratorPokemon
 		{
 			this.fuerza *= 1.1;
 			this.vitalidad *= 1.1;
-		}
-		else
+		} else
 			encapsulado.recarga();
 	}
 
 	public void hechizoNiebla()
 	{
-		if(this.auraDeAgua)
+		if (this.auraDeAgua)
 			this.auraDeAgua = false;
 		this.vitalidad *= 0.75;
 		this.escudo *= 0.9;
@@ -64,7 +74,7 @@ public class DecoratorAgua extends DecoratorPokemon
 
 	public void hechizoViento()
 	{
-		if(this.recargaAgua)
+		if (this.recargaAgua)
 			this.recargaAgua = false;
 		this.fuerza *= 0.8;
 		this.escudo *= 0.8;
@@ -74,6 +84,7 @@ public class DecoratorAgua extends DecoratorPokemon
 	{
 		this.vitalidad *= 0.7;
 	}
+
 	@Override
 	protected String getTipo()
 	{
@@ -83,18 +94,18 @@ public class DecoratorAgua extends DecoratorPokemon
 	@Override
 	public String toString()
 	{
-		return  "Pokemon nombre=" + nombre + ", escudo=" + escudo + ", vitalidad=" + vitalidad + ", fuerza=" + fuerza
-				+ ", experiencia=" + experiencia + this.getTipo()+ " encapsulado: " + encapsulado;
+		return "Pokemon nombre=" + nombre + ", escudo=" + escudo + ", vitalidad=" + vitalidad + ", fuerza=" + fuerza
+				+ ", experiencia=" + experiencia + this.getTipo() + " encapsulado: " + encapsulado;
 	}
-	
+
 	@Override
 	public Object clone() throws CloneNotSupportedException
 	{
 		DecoratorAgua decoradorClonado = null;
-		decoradorClonado = (DecoratorAgua)super.clone();
-		if(encapsulado !=null)
-			decoradorClonado.encapsulado = (Pokemon)encapsulado.clone();
-		return decoradorClonado; 
+		decoradorClonado = (DecoratorAgua) super.clone();
+		if (encapsulado != null)
+			decoradorClonado.encapsulado = (Pokemon) encapsulado.clone();
+		return decoradorClonado;
 	}
-	
+
 }

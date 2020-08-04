@@ -1,7 +1,6 @@
 package Modelo;
 
 import java.util.Observable;
-import java.util.Observer;
 
 /**
  * @author Vucetic Ivo <br>
@@ -11,10 +10,7 @@ import java.util.Observer;
  *         resulte victorioso y si se puede usar dicha arena. Esta clase podrá
  *         ser observada por otras.
  */
-/**
- * @author Acer
- *
- */
+
 public class Arena extends Observable
 {
 	private IState estado;
@@ -39,10 +35,9 @@ public class Arena extends Observable
 	 * Este método será la puerta de entrada para que se pueda usar una arena del
 	 * torneo. Se podrá ingresar solo si esta desocupada, caso contrario quien
 	 * ingrese deberá esperar para su uso.<br>
-	 * <b>Pre: </b> El enfrentamiento debe ser distinto de null.<b>Pre: </b> <b>Pos:
-	 * </b> Si la arena se encontraba desocupada el enfrentamiento se podrá
-	 * disputar, caso contrario deberá aguardar hasta que se lo notifique.<b>Pre:
-	 * </b>
+	 * <b>Pre: </b> El enfrentamiento debe ser distinto de null.<b>Pos:</b> Si la
+	 * arena se encontraba desocupada el enfrentamiento se podrá disputar, caso
+	 * contrario deberá aguardar hasta que se lo notifique.<b>
 	 * 
 	 * @param enfrentamiento: parámetro de tipo enfrentamiento que representa el par
 	 *                        de entrenadores que quieren ingresar a dicha arena.
@@ -70,7 +65,7 @@ public class Arena extends Observable
 
 		this.ocupada = true;
 		notifyAll();
-		
+
 		mensaje = "Estado arena: Preliminar";
 		this.notificaCambios(mensaje);
 
@@ -84,7 +79,6 @@ public class Arena extends Observable
 		this.obtenerResultados();
 		enfrentamiento.setGanador(ganador);
 	}
-	
 
 	/**
 	 * Dependiendo del estado en el que se encuentre la arena, este método variará
@@ -153,7 +147,7 @@ public class Arena extends Observable
 	{
 		return estado;
 	}
-
+	
 	public void notificaCambios(String mensaje)
 	{
 		this.setChanged();
